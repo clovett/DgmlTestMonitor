@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="AA2EBB7E-8223-4DA0-A35A-D09EEC7F3C86" Version="3.5" Language="en-US" Publisher="Chris Lovett" />
+    <DisplayName>DgmlTestMonitor 2015</DisplayName>
+    <Description xml:space="preserve">This package watches the DgmlTestModel execution and animates the current state of the test in the associated DGML test diagram in Visual Studio 2015</Description>
+    <MoreInfo>http://www.lovettsoftware.com/LovettSoftware/post/2012/12/02/Model-Based-UI-Testing-using-DGML.aspx</MoreInfo>
+    <License>License.txt</License>
+    <GettingStartedGuide>http://www.lovettsoftware.com/Videos/DgmlTestModel.mp4</GettingStartedGuide>
+    <Icon>Resources\Package.png</Icon>
+    <PreviewImage>Resources\Preview.png</PreviewImage>
+  </Metadata>
+  <Installation InstalledByMsi="false">
+    <InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Community" />
+    <InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Enterprise" />
+    <InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Pro" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
+    <Dependency d:Source="Installed" Id="Microsoft.VisualStudio.MPF.14.0" DisplayName="Visual Studio MPF 14.0" Version="[14.0,15.0)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+  </Assets>
+</PackageManifest>

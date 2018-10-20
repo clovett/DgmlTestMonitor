@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="VTeam.DgmlTestMonitor.DgmlTestMonitorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"             
+             xmlns:platformUI="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
+             xmlns:local="clr-namespace:VTeam.DgmlTestMonitor"
+             Background="{DynamicResource {x:Static platformUI:EnvironmentColors.ToolWindowBackgroundBrushKey}}"
+             Foreground="{DynamicResource {x:Static platformUI:EnvironmentColors.ToolWindowTextBrushKey}}"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300"
+             >
+    <DockPanel>
+
+        <local:VideoLauncher LinkText="Video: DGML Test Modeling" DockPanel.Dock="Top" MinHeight="22"
+                             VideoUrl="http://www.lovettsoftware.com/videos/DgmlTestModel.mp4"
+                             VideoDescription="This seven minute video shows how to use the DGML Test Monitor which is designed to be used in combination with a DGML Test Model."/>
+
+        <Border Padding="2" Background="{DynamicResource {x:Static platformUI:EnvironmentColors.CommandBarGradientBeginBrushKey}}"  DockPanel.Dock="Top" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <local:ToolbarButton x:Name="PauseButton" Click="OnTogglePause" ToolTip="Pause exection of the model" IconUri="Resources/Pause.png"/>
+                <local:ToolbarButton x:Name="SetBreakpointButton" Click="OnSetBreakpoint" ToolTip="Set breakpoint on selected node" Grid.Column="1" IconUri="Resources/Breakpoint.png"/>
+                <local:ToolbarButton x:Name="ClearBreakpointButton" Click="OnClearBreakpoint" ToolTip="Clear breakpoint on selected node" Grid.Column="2" IconUri="Resources/ClearBreakpoint.png"/>
+                <local:ToolbarButton x:Name="RemoveAllBreakpointsButton" Click="OnRemoveAllBreakpoints" ToolTip="Remove all breakpoints" Grid.Column="3" IconUri="Resources/RemoveAllBreakpoints.png" />
+            </Grid>
+        </Border>
+
+        <RichTextBox x:Name="LogView" VerticalScrollBarVisibility="Auto" BorderThickness="0"
+                 Background="{Binding Background, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+    </DockPanel>
+</UserControl>

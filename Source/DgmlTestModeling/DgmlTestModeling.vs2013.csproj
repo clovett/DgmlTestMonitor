@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2FEE24BA-85FD-4863-8F3A-41AE0A6DC8CE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.VisualStudio.DgmlTestModeling</RootNamespace>
+    <AssemblyName>Microsoft.VisualStudio.DgmlTestModeling</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Debug\Microsoft.VisualStudio.DgmlTestModeling.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Release\Microsoft.VisualStudio.DgmlTestModeling.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>$(MyKeyFile)</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.GraphModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DgmlTestModel.cs" />
+    <Compile Include="NamedPipeReader.cs" />
+    <Compile Include="NamedPipeWriter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="docit\doc.xslt" />
+    <Content Include="docit\ILToXml.exe" />
+    <Content Include="docit\Microsoft.VisualStudio.DgmlTestModeling.xml" />
+    <Content Include="docit\System.Compiler.dll" />
+    <Content Include="Package\Dgml.png" />
+    <Content Include="Package\lib\net40\Microsoft.VisualStudio.DgmlTestModeling.dll" />
+    <Content Include="Readme.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SampleTestModel.dgml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Package\Microsoft.VisualStudio.DgmlTestModeling.vs2013.dll.nuspec" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  -->
+  <Target Name="AfterBuild">
+    <PropertyGroup>
+      <DocFile>$(ProjectDir)\@(DocFileItem)</DocFile>
+    </PropertyGroup>
+    <Message Importance="high" Text="IlToXml on $(DocFile)" />
+    <Exec Command="&quot;$(ProjectDir)\docit\iltoxml.exe&quot; -o &quot;Microsoft.VisualStudio.DgmlTestModeling.xml&quot; -n Microsoft.VisualStudio.DgmlTestModeling -d &quot;$(DocFile)&quot; &quot;$(TargetPath)&quot;" Condition="'@(DocFileItem)' != ''" Outputs="$(ProjectDir)\docit\Microsoft.VisualStudio.DgmlTestModeling.xml" WorkingDirectory="$(ProjectDir)\docit\" StandardErrorImportance="High">
+    </Exec>
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ProjectDir)\Package\lib\net40" />
+    <Exec Command="$(MSBuildThisFileDirectory)\..\Tools\NuGet.exe pack Microsoft.VisualStudio.DgmlTestModeling.vs2013.dll.nuspec" WorkingDirectory="$(ProjectDir)\Package" />
+  </Target>
+</Project>
