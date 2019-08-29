@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Threading;
 
-namespace Microsoft.VisualStudio.DgmlTestModeling
+namespace LovettSoftware.DgmlTestModeling
 {
     /// <summary>
     /// This is a DGML schema which defines GraphCategory and GraphProperty objects that are 

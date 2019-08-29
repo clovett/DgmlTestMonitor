@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VTeam.DgmlTestMonitor
+namespace DgmlTestMonitor
 {
     public class LogViewModel
     {

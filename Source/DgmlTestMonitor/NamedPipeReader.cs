@@ -7,7 +7,7 @@ using System.IO.Pipes;
 using System.IO;
 using System.Threading;
 
-namespace VTeam.DgmlTestMonitor
+namespace DgmlTestMonitor
 {
     public class PipeMessageEventArgs : EventArgs
     {

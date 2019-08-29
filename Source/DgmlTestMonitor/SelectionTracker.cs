@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Progression;
 
-namespace VTeam.DgmlTestMonitor
+namespace DgmlTestMonitor
 {
     public class ActiveWindowChangedEventArgs : EventArgs
     {

@@ -11,7 +11,7 @@ using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using Windows.System.Threading;
 
-namespace Microsoft.VisualStudio.DgmlTestModeling
+namespace LovettSoftware.DgmlTestModeling
 {
 
     public class ConnectionLostEventArgs : EventArgs

@@ -2,7 +2,7 @@
 // MUST match PkgCmdID.h
 using System;
 
-namespace VTeam.DgmlTestMonitor
+namespace DgmlTestMonitor
 {
     static class PkgCmdIDList
     {

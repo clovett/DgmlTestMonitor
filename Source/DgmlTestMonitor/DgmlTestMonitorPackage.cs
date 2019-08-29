@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Progression;
 using System.Collections.Generic;
 
-namespace VTeam.DgmlTestMonitor
+namespace DgmlTestMonitor
 {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.

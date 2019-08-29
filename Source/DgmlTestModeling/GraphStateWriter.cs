@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.VisualStudio.DgmlTestModeling
+namespace LovettSoftware.DgmlTestModeling
 {
     /// <summary>
     /// This class serializes graph node transitions over a named pipe to a GraphStateReader.

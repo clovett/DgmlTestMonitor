@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -7,9 +7,9 @@
     <ProjectGuid>{2FEE24BA-85FD-4863-8F3A-41AE0A6DC8CE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.VisualStudio.DgmlTestModeling</RootNamespace>
-    <AssemblyName>Microsoft.VisualStudio.DgmlTestModeling</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>LovettSoftware.DgmlTestModeling</RootNamespace>
+    <AssemblyName>LovettSoftware.DgmlTestModeling</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -27,7 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Debug\Microsoft.VisualStudio.DgmlTestModeling.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\LovettSoftware.DgmlTestModeling.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,7 +37,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Release\Microsoft.VisualStudio.DgmlTestModeling.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\LovettSoftware.DgmlTestModeling.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -46,7 +46,7 @@
     <AssemblyOriginatorKeyFile>$(MyKeyFile)</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.GraphModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.GraphModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime">
@@ -113,6 +113,6 @@
     <Exec Command="&quot;$(ProjectDir)\docit\iltoxml.exe&quot; -o &quot;Microsoft.VisualStudio.DgmlTestModeling.xml&quot; -n Microsoft.VisualStudio.DgmlTestModeling -d &quot;$(DocFile)&quot; &quot;$(TargetPath)&quot;" Condition="'@(DocFileItem)' != ''" Outputs="$(ProjectDir)\docit\Microsoft.VisualStudio.DgmlTestModeling.xml" WorkingDirectory="$(ProjectDir)\docit\" StandardErrorImportance="High">
     </Exec>
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ProjectDir)\Package\lib\net40" />
-    <Exec Command="$(MSBuildThisFileDirectory)\..\Tools\NuGet.exe pack Microsoft.VisualStudio.DgmlTestModeling.2015.dll.nuspec" WorkingDirectory="$(ProjectDir)\Package" />
+    <Exec Command="$(MSBuildThisFileDirectory)\..\Tools\NuGet.exe pack Microsoft.VisualStudio.DgmlTestModeling.2017.dll.nuspec" WorkingDirectory="$(ProjectDir)\Package" />
   </Target>
 </Project>

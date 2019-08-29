@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Progression;
 
-namespace VTeam.DgmlTestMonitor
+namespace DgmlTestMonitor
 {
     /// <summary>
     /// This class implements the tool window exposed by this package and hosts a user control.

@@ -9,7 +9,7 @@ using Windows.Storage.Streams;
 using System.IO;
 using Windows.Networking;
 
-namespace Microsoft.VisualStudio.DgmlTestModeling
+namespace LovettSoftware.DgmlTestModeling
 {
 
     /// <summary>

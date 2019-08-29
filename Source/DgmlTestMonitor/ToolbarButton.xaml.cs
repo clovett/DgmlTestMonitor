@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VTeam.DgmlTestMonitor
+namespace DgmlTestMonitor
 {
     /// <summary>
     /// Interaction logic for ToolbarButton.xaml

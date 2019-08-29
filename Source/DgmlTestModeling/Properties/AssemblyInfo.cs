@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Microsoft.VisualStudio.DgmlTestModeling")]
+[assembly: AssemblyTitle("LovettSoftware.DgmlTestModeling")]
 [assembly: AssemblyDescription("A library for execiting DGML test models")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("LovettSoftware")]
-[assembly: AssemblyProduct("Microsoft.VisualStudio.DgmlTestModeling")]
+[assembly: AssemblyProduct("LovettSoftware.DgmlTestModeling")]
 [assembly: AssemblyCopyright("Copyright © 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

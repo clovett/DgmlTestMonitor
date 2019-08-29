@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.DgmlTestModeling;
+﻿using LovettSoftware.DgmlTestModeling;
 using Microsoft.VisualStudio.GraphModel;
 using Microsoft.VisualStudio.GraphModel.Styles;
 using Microsoft.VisualStudio.Progression;
@@ -12,7 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-namespace VTeam.DgmlTestMonitor
+namespace DgmlTestMonitor
 {
     /// <summary>
     /// Interaction logic for DgmlTestMonitorView.xaml

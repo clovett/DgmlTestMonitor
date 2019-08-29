@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 //using System.Windows.Input;
 
-namespace Microsoft.VisualStudio.DgmlTestModeling
+namespace LovettSoftware.DgmlTestModeling
 {
     public enum MessageType
     {

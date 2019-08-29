@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using Microsoft.VisualStudio.PlatformUI;
 using System.Runtime.InteropServices;
 
-namespace VTeam.DgmlTestMonitor
+namespace DgmlTestMonitor
 {
     /// <summary>
     /// Interaction logic for VideoLauncher.xaml

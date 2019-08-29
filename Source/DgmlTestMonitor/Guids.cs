@@ -2,7 +2,7 @@
 // MUST match guids.h
 using System;
 
-namespace VTeam.DgmlTestMonitor
+namespace DgmlTestMonitor
 {
     static class GuidList
     {

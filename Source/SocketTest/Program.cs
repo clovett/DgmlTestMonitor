@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.DgmlTestModeling;
+﻿using LovettSoftware.DgmlTestModeling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,6 @@ namespace SocketTest
 {
     class Program
     {
-        bool client;
         int DefaultPort = 25777;
 
         static void Main(string[] args)
@@ -39,7 +38,17 @@ namespace SocketTest
         {
             SmartSocketClient client = (SmartSocketClient)sender;
             client.MessageReceived += OnClientMessageReceived;
-            client.SendAsync(new ClearTextMessage("this is a test"));
+            Task.Run(() => PingServer(client));
+        }
+
+        async void PingServer(SmartSocketClient client)
+        {
+            int ping = 1;
+            while (true)
+            {
+                client.SendAsync(new ClearTextMessage("ping " + ping++));
+                await Task.Delay(1000);
+            }
         }
 
         private void OnClientMessageReceived(object sender, Message e)

@@ -6,267 +6,175 @@
 <!--#################################################-->
 <doc>
   <assembly>
-    <name>Microsoft.VisualStudio.DgmlTestModeling</name>
-    <class name="DgmlTestModelSchema" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
-      <summary>
-            This is a DGML schema which defines GraphCategory and GraphProperty objects that are 
-            used by the DgmlTestModel to find various important things in a DGML Test Document.
-            </summary>
+    <name>LovettSoftware.DgmlTestModeling</name>
+    <class name="DgmlTestModelSchema" namespace="LovettSoftware.DgmlTestModeling" static="true">
       <field name="Schema" public="true" static="true">
         <type name="GraphSchema" namespace="Microsoft.VisualStudio.GraphModel" />
-        <summary>
-            Instance of the GraphSchema
-            </summary>
       </field>
       <field name="EntryPointCategory" public="true" static="true">
         <type name="GraphCategory" namespace="Microsoft.VisualStudio.GraphModel" />
-        <summary>
-            Nodes with this category define an entry point for the model either
-            at the root level, or inside a group.
-            </summary>
       </field>
       <field name="SingletonCategory" public="true" static="true">
         <type name="GraphCategory" namespace="Microsoft.VisualStudio.GraphModel" />
-        <summary>
-            Nodes with this category are executed mutually exclusively.
-            </summary>
       </field>
       <field name="BreakpointCategory" public="true" static="true">
         <type name="GraphCategory" namespace="Microsoft.VisualStudio.GraphModel" />
-        <summary>
-            Nodes with this category will cause the DGML Test Monitor to pause on this node.
-            </summary>
       </field>
       <field name="PriorityProperty" public="true" static="true">
         <type name="GraphProperty" namespace="Microsoft.VisualStudio.GraphModel" />
-        <summary>
-            This property can be used on a link to define a higher or lower priority relative
-            to other links.  Normally integer values are used like 1 through 10, but it is
-            typed as a double just in case you need that.
-            </summary>
       </field>
       <field name="ChildPriorityProperty" public="true" static="true">
         <type name="GraphProperty" namespace="Microsoft.VisualStudio.GraphModel" />
-        <summary>
-            This property can be used on a group to define the priority for entering the children
-            of the group as opposed to navigating away from the group.  This would be the
-            same as adding a Priority to the Contains links, but it makes it easier to
-            do in the DGML editor where you can't see the containment links.
-            </summary>
       </field>
       <field name="DisabledProperty" public="true" static="true">
         <type name="GraphProperty" namespace="Microsoft.VisualStudio.GraphModel" />
-        <summary>
-            Nodes with Disabled=true are ignored during model execution so this is
-            a convenient way to skip them temporarily.
-            </summary>
       </field>
       <method class="DgmlTestModelSchema" name="#ctor">
         <!--nodocs-->
       </method>
     </class>
-    <class name="DgmlTestModel" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
-      <summary>
-            This class loads a given DGML test model and executes it.  The execution state is 
-            writen to a named pipe so that the DGML Test Monitor VSIX package can watch and
-            animate the progress through the model.
-            </summary>
+    <class name="DgmlTestModel" namespace="LovettSoftware.DgmlTestModeling" static="true">
       <method class="DgmlTestModel" name="#ctor">
-        <summary>
-            Construct a new DgmlTestModel for execution against the given target object.
-            When a node is chosen in the model a method with the same name is looked for on
-            the target object and if found that method is called.  When a link is being
-            considered a boolean property with the same name as the link label is looked up
-            and if found it is called.  If false is returned the link is not considered.
-            </summary>
+        <!--nodocs-->
         <params>
-          <arg var="target" name="object" namespace="System">The target object that implements the node state methods and link predicates</arg>
-          <arg var="log" name="TextWriter" namespace="System.IO">The log to write to</arg>
-          <arg var="r" name="Random" namespace="System">The random number generator to use</arg>
+          <arg var="target" name="object" namespace="System" />
+          <arg var="log" name="TextWriter" namespace="System.IO" />
+          <arg var="r" name="Random" namespace="System" />
         </params>
       </method>
       <method name="Load" public="true">
-        <summary>
-            Load the DGML document at the given path.  This document contains nodes
-            and links decorated with categories and properties defined in the 
-            DgmlTestModelSchema.  You can also define a set of styles to colorize the
-            special categories.  
-            </summary>
+        <!--nodocs-->
         <params>
           <arg var="path" name="string" namespace="System" />
         </params>
         <returns name="void" namespace="System" />
       </method>
       <method name="Run" public="true">
-        <summary>
-            Execute the model until the given predicate returns false.
-            </summary>
+        <!--nodocs-->
         <params>
-          <arg var="until" name="Predicate&lt;DgmlTestModel&gt;" namespace="System">The predicate that determines when the model should stop executing.</arg>
-          <arg var="sleep" name="Int32" namespace="System">You can add a delay between each state to slow down the execution, this is handy for debugging.</arg>
+          <arg var="until" name="Predicate&lt;DgmlTestModel&gt;" namespace="System" />
+          <arg var="sleep" name="Int32" namespace="System" />
         </params>
         <returns name="void" namespace="System" />
       </method>
       <method name="Stop" public="true">
-        <summary>
-            Call this method to stop the model.
-            </summary>
+        <!--nodocs-->
         <returns name="void" namespace="System" />
       </method>
       <property name="StatesExecuted" public="true" get="true" set="true">
         <type name="Int32" namespace="System" />
-        <summary>
-            Returns the number of states executed so far.
-            </summary>
       </property>
     </class>
-    <class name="GraphStateReader" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
-      <summary>
-            This class reads the state passed by GraphStateWriter via named pipe.
-            </summary>
+    <class name="GraphStateReader" namespace="LovettSoftware.DgmlTestModeling" static="true">
       <implements name="IDisposable" namespace="System" />
       <method class="GraphStateReader" name="#ctor">
-        <summary>
-            Construct graph state reader.
-            </summary>
+        <!--nodocs-->
       </method>
       <method name="Start" public="true">
-        <summary>
-            Start listening for the various graph events
-            </summary>
-        <returns name="Task" namespace="System.Threading.Tasks">The async task</returns>
+        <!--nodocs-->
+        <returns name="Task" namespace="System.Threading.Tasks" />
       </method>
       <method name="Pause" public="true">
-        <summary>
-            Pause the pipe without hitting a breakpoint.
-            </summary>
+        <!--nodocs-->
         <returns name="void" namespace="System" />
       </method>
       <method name="Resume" public="true">
-        <summary>
-            Resume execution after hitting a breakpoint.
-            </summary>
+        <!--nodocs-->
         <returns name="void" namespace="System" />
       </method>
       <method name="Dispose" public="true" virtual="true">
-        <summary>
-            Dispose the reader
-            </summary>
+        <!--nodocs-->
         <returns name="void" namespace="System" />
       </method>
       <property name="IsPaused" public="true" get="true">
         <type name="Boolean" namespace="System" />
-        <summary>
-            Find out if pipe is paused which could be a resuilt of calling Pause or from hitting a breakpoint.
-            </summary>
       </property>
       <event name="MessageReceived" public="true">
         <type name="EventHandler&lt;Message&gt;" namespace="System" />
-        <summary>
-            This event is raised when a message is received.
-            We are expecting LoadGraphMessage, NavigateLinkMessage, NavigateNodeMessage and ClearTextMessages
-            </summary>
       </event>
     </class>
-    <class name="GraphStateWriter" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
-      <summary>
-            This class serializes graph node transitions over a named pipe to a GraphStateReader.
-            </summary>
+    <class name="GraphStateWriter" namespace="LovettSoftware.DgmlTestModeling" static="true">
       <method class="GraphStateWriter" name="#ctor">
-        <summary>
-            Construct new graph state writer
-            </summary>
+        <!--nodocs-->
         <params>
-          <arg var="log" name="TextWriter" namespace="System.IO">Separate log file in addition to the named pipe</arg>
+          <arg var="log" name="TextWriter" namespace="System.IO" />
         </params>
       </method>
       <method name="Connect" public="true">
-        <summary>
-            Connect to the server so we can start sending messages
-            </summary>
+        <!--nodocs-->
         <returns name="Task" namespace="System.Threading.Tasks" />
       </method>
       <method name="LoadGraph" public="true">
-        <summary>
-            Instruct client to load the given graph.
-            </summary>
+        <!--nodocs-->
         <params>
-          <arg var="path" name="string" namespace="System">Full path to .dgml file</arg>
+          <arg var="path" name="string" namespace="System" />
         </params>
         <returns name="void" namespace="System" />
       </method>
       <method name="NavigateToNode" public="true">
-        <summary>
-            Instruct client to navigate to the given node
-            </summary>
+        <!--nodocs-->
         <params>
-          <arg var="node" name="GraphNode" namespace="Microsoft.VisualStudio.GraphModel">A GraphNode object belonging to the graph loaded in LoadGraph</arg>
+          <arg var="node" name="GraphNode" namespace="Microsoft.VisualStudio.GraphModel" />
         </params>
         <returns name="void" namespace="System" />
       </method>
       <method name="NavigateLink" public="true">
-        <summary>
-            Instruct client to navigate the given link
-            </summary>
+        <!--nodocs-->
         <params>
-          <arg var="link" name="GraphLink" namespace="Microsoft.VisualStudio.GraphModel">A GraphLink object belonging to the graph loaded in LoadGraph</arg>
+          <arg var="link" name="GraphLink" namespace="Microsoft.VisualStudio.GraphModel" />
         </params>
         <returns name="void" namespace="System" />
       </method>
       <method name="WriteMessage" public="true">
-        <summary>
-            Write an additional message to the client
-            </summary>
+        <!--nodocs-->
         <params>
-          <arg var="format" name="string" namespace="System">String to be formatted using string.format</arg>
-          <arg var="args" name="Object[]" namespace="System">The arguments</arg>
+          <arg var="format" name="string" namespace="System" />
+          <arg var="args" name="Object[]" namespace="System" />
         </params>
         <returns name="void" namespace="System" />
       </method>
       <method name="Close" public="true">
-        <summary>
-            Close the pipe
-            </summary>
+        <!--nodocs-->
         <returns name="void" namespace="System" />
       </method>
     </class>
-    <enum name="MessageType" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true" sealed="true">
+    <enum name="MessageType" namespace="LovettSoftware.DgmlTestModeling" static="true" sealed="true">
       <field name="Connected" public="true" static="true" value="0">
-        <type name="MessageType" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+        <type name="MessageType" namespace="LovettSoftware.DgmlTestModeling" />
       </field>
       <field name="Disconnected" public="true" static="true" value="1">
-        <type name="MessageType" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+        <type name="MessageType" namespace="LovettSoftware.DgmlTestModeling" />
       </field>
       <field name="Ping" public="true" static="true" value="2">
-        <type name="MessageType" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+        <type name="MessageType" namespace="LovettSoftware.DgmlTestModeling" />
       </field>
       <field name="ClearText" public="true" static="true" value="3">
-        <type name="MessageType" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+        <type name="MessageType" namespace="LovettSoftware.DgmlTestModeling" />
       </field>
       <field name="LoadGraph" public="true" static="true" value="4">
-        <type name="MessageType" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+        <type name="MessageType" namespace="LovettSoftware.DgmlTestModeling" />
       </field>
       <field name="NavigateToNode" public="true" static="true" value="5">
-        <type name="MessageType" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+        <type name="MessageType" namespace="LovettSoftware.DgmlTestModeling" />
       </field>
       <field name="NavigateLink" public="true" static="true" value="6">
-        <type name="MessageType" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+        <type name="MessageType" namespace="LovettSoftware.DgmlTestModeling" />
       </field>
     </enum>
-    <class name="Message" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
+    <class name="Message" namespace="LovettSoftware.DgmlTestModeling" static="true">
       <field name="MessageHeader" public="true" static="true">
         <type name="UInt32" namespace="System" />
       </field>
       <method class="Message" name="#ctor">
         <!--nodocs-->
         <params>
-          <arg var="type" name="MessageType" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+          <arg var="type" name="MessageType" namespace="LovettSoftware.DgmlTestModeling" />
         </params>
       </method>
       <method name="Merge" public="true" virtual="true">
         <!--nodocs-->
         <params>
-          <arg var="other" name="Message" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+          <arg var="other" name="Message" namespace="LovettSoftware.DgmlTestModeling" />
         </params>
         <returns name="Boolean" namespace="System" />
       </method>
@@ -289,12 +197,10 @@
         <params>
           <arg var="reader" name="BinaryReader" namespace="System.IO" />
         </params>
-        <returns name="Message" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+        <returns name="Message" namespace="LovettSoftware.DgmlTestModeling" />
       </method>
       <method name="ToArray" public="true">
-        <summary>
-            Serialize the message into a buffer for sending over the wire.
-            </summary>
+        <!--nodocs-->
         <returns name="Byte[]" namespace="System" />
       </method>
       <property name="MessageId" public="true" get="true" set="true">
@@ -304,11 +210,11 @@
         <type name="Int64" namespace="System" />
       </property>
       <property name="Type" public="true" get="true">
-        <type name="MessageType" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+        <type name="MessageType" namespace="LovettSoftware.DgmlTestModeling" />
       </property>
     </class>
-    <class name="ConnectedMessage" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
-      <extends name="Message" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+    <class name="ConnectedMessage" namespace="LovettSoftware.DgmlTestModeling" static="true">
+      <extends name="Message" namespace="LovettSoftware.DgmlTestModeling" />
       <method class="ConnectedMessage" name="#ctor">
         <!--nodocs-->
       </method>
@@ -336,8 +242,8 @@
         <type name="string" namespace="System" />
       </property>
     </class>
-    <class name="ClearTextMessage" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
-      <extends name="Message" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+    <class name="ClearTextMessage" namespace="LovettSoftware.DgmlTestModeling" static="true">
+      <extends name="Message" namespace="LovettSoftware.DgmlTestModeling" />
       <method class="ClearTextMessage" name="#ctor">
         <!--nodocs-->
       </method>
@@ -365,8 +271,8 @@
         <type name="string" namespace="System" />
       </property>
     </class>
-    <class name="LoadGraphMessage" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
-      <extends name="Message" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+    <class name="LoadGraphMessage" namespace="LovettSoftware.DgmlTestModeling" static="true">
+      <extends name="Message" namespace="LovettSoftware.DgmlTestModeling" />
       <method class="LoadGraphMessage" name="#ctor">
         <!--nodocs-->
       </method>
@@ -394,8 +300,8 @@
         <type name="string" namespace="System" />
       </property>
     </class>
-    <class name="NavigateNodeMessage" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
-      <extends name="Message" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+    <class name="NavigateNodeMessage" namespace="LovettSoftware.DgmlTestModeling" static="true">
+      <extends name="Message" namespace="LovettSoftware.DgmlTestModeling" />
       <method class="NavigateNodeMessage" name="#ctor">
         <!--nodocs-->
       </method>
@@ -427,8 +333,8 @@
         <type name="string" namespace="System" />
       </property>
     </class>
-    <class name="NavigateLinkMessage" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
-      <extends name="Message" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+    <class name="NavigateLinkMessage" namespace="LovettSoftware.DgmlTestModeling" static="true">
+      <extends name="Message" namespace="LovettSoftware.DgmlTestModeling" />
       <method class="NavigateLinkMessage" name="#ctor">
         <!--nodocs-->
       </method>
@@ -476,27 +382,18 @@
         <type name="Int32" namespace="System" />
       </property>
     </class>
-    <class name="MessageEventArgs" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
-      <summary>
-            This event args is used to communicate messages read from the pipe.
-            </summary>
+    <class name="MessageEventArgs" namespace="LovettSoftware.DgmlTestModeling" static="true">
       <method class="MessageEventArgs" name="#ctor">
-        <summary>
-            Construct a new PipeMessageEventArgs with the given message.
-            This is used by the MessageArrived event on the NamedPipeReader
-            </summary>
+        <!--nodocs-->
         <params>
-          <arg var="message" name="Message" namespace="Microsoft.VisualStudio.DgmlTestModeling">The message that was read by the NamedPipeReader</arg>
+          <arg var="message" name="Message" namespace="LovettSoftware.DgmlTestModeling" />
         </params>
       </method>
       <property name="Message" public="true" get="true" set="true">
-        <type name="Message" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
-        <summary>
-            The message that was read by the NamedPipeReader
-            </summary>
+        <type name="Message" namespace="LovettSoftware.DgmlTestModeling" />
       </property>
     </class>
-    <class name="ConnectionLostEventArgs" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
+    <class name="ConnectionLostEventArgs" namespace="LovettSoftware.DgmlTestModeling" static="true">
       <method class="ConnectionLostEventArgs" name="#ctor">
         <!--nodocs-->
       </method>
@@ -507,11 +404,7 @@
         <type name="Boolean" namespace="System" />
       </property>
     </class>
-    <class name="SmartSocketClient" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true">
-      <summary>
-            This class connects to a given server/port and setups the ability to exchange events and html assets for
-            rendering any custom application level UI sent from that server.
-            </summary>
+    <class name="SmartSocketClient" namespace="LovettSoftware.DgmlTestModeling" static="true">
       <implements name="IDisposable" namespace="System" />
       <method class="SmartSocketClient" name="#ctor">
         <!--nodocs-->
@@ -537,7 +430,7 @@
       <method name="SendAsync" public="true">
         <!--nodocs-->
         <params>
-          <arg var="message" name="Message" namespace="Microsoft.VisualStudio.DgmlTestModeling" />
+          <arg var="message" name="Message" namespace="LovettSoftware.DgmlTestModeling" />
         </params>
         <returns name="void" namespace="System" />
       </method>
@@ -554,11 +447,7 @@
         <type name="EventHandler&lt;Message&gt;" namespace="System" />
       </event>
     </class>
-    <class name="SmartSocketListener" namespace="Microsoft.VisualStudio.DgmlTestModeling" static="true" sealed="true">
-      <summary>
-            This class provides an auto-reconnecting stream socket server for simple bidirection
-            message passing.  
-            </summary>
+    <class name="SmartSocketListener" namespace="LovettSoftware.DgmlTestModeling" static="true" sealed="true">
       <method class="SmartSocketListener" name="#ctor">
         <!--nodocs-->
       </method>

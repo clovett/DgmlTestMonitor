@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Microsoft.VisualStudio.DgmlTestModeling.2015.dll</id>
+    <id>LovettSoftware.DgmlTestModeling.2015.dll</id>
     <version>3.4.0</version>
     <authors>Chris Lovett</authors>
     <owners>Chris Lovett</owners>
