@@ -118,7 +118,7 @@ namespace LovettSoftware.DgmlTestModeling
         /// <param name="path"></param>
         public void Load(string path) 
         {
-            writer.LoadGraph(path);
+            writer.LoadGraph(path).Wait();
             model = Graph.Load(path, DgmlTestModelSchema.Schema);
         }
 
@@ -180,7 +180,7 @@ namespace LovettSoftware.DgmlTestModeling
             MethodInfo mi = target.GetType().GetMethod("HandleException", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static, null, new Type[] { typeof(Exception) }, null);
             if (mi == null)
             {
-                writer.WriteMessage("No error handler found");
+                writer.WriteMessage("No error handler found").Wait();
                 return false;
             }
 
@@ -257,7 +257,7 @@ namespace LovettSoftware.DgmlTestModeling
                     if (containment.HasCategory(GraphCommonSchema.Contains))
                     {
                         // then walk back up to parent group and try an exit transition.
-                        writer.NavigateToNode(containment.Source);
+                        writer.NavigateToNode(containment.Source).Wait();
                         currentState = containment.Source;
                         return FindTransition(currentState);
                     }
@@ -271,7 +271,7 @@ namespace LovettSoftware.DgmlTestModeling
 
             // pick an entry point at random.
             GraphLink link = choices.GetRandomChoice();
-            writer.NavigateLink(link);
+            writer.NavigateLink(link).Wait();
             GraphNode newState = link.Target;
 
             GraphNode group = null;
@@ -450,13 +450,13 @@ namespace LovettSoftware.DgmlTestModeling
             PropertyInfo pi = target.GetType().GetProperty(label, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, typeof(bool), new Type[0], null);
             if (pi == null)
             {
-                writer.WriteMessage("No implementation found for link '{0}'", label);
+                writer.WriteMessage("No implementation found for link '{0}'", label).Wait();
                 return false;
             }
 
             bool value = (bool)pi.GetValue(target, null);
 
-            writer.WriteMessage("? Can Navigate link '{0}' : {1}", label, value);
+            writer.WriteMessage("? Can Navigate link '{0}' : {1}", label, value).Wait();
             return value;
         }
 
@@ -507,12 +507,12 @@ namespace LovettSoftware.DgmlTestModeling
 
             IncrementCount(currentState);
 
-            writer.NavigateToNode(currentState);
+            writer.NavigateToNode(currentState).Wait();
 
             MethodInfo mi = target.GetType().GetMethod(label, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static, null, new Type[0], null);
             if (mi == null)
             {
-                writer.WriteMessage("Error: No implementation found for state '{0}'", label);
+                writer.WriteMessage("Error: No implementation found for state '{0}'", label).Wait();
                 return;
             }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.GraphModel;
+﻿using Microsoft.Coyote.SmartSockets;
+using Microsoft.VisualStudio.GraphModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace LovettSoftware.DgmlTestModeling
     /// </summary>
     public class GraphStateReader : IDisposable
     {
-        SmartSocketListener server;
+        SmartSocketServer server;
 
         /// <summary>
         /// This event is raised when a message is received.
@@ -26,17 +27,23 @@ namespace LovettSoftware.DgmlTestModeling
         /// </summary>
         public GraphStateReader()
         {
-            server = new SmartSocketListener();
         }
 
         /// <summary>
         /// Start listening for the various graph events
         /// </summary>
         /// <returns>The async task</returns>
-        public async Task Start()
+        public void Start()
         {
-            try {
-                await server.StartListening(GraphStateWriter.DefaultPort);
+            try
+            {
+                var resolver = new SmartSocketTypeResolver(typeof(Message),
+                                                           typeof(ConnectedMessage),
+                                                           typeof(ClearTextMessage),
+                                                           typeof(LoadGraphMessage),
+                                                           typeof(NavigateNodeMessage),
+                                                           typeof(NavigateLinkMessage));
+                this.server = SmartSocketServer.StartServer("DgmlTestMonitor", resolver, "127.0.0.1:0");
                 server.ClientConnected += OnClientAdded;
                 server.ClientDisconnected += OnClientRemoved;
             }
@@ -56,23 +63,36 @@ namespace LovettSoftware.DgmlTestModeling
         private void OnClientAdded(object sender, SmartSocketClient e)
         {
             clients.Add(e);
-            e.MessageReceived += OnMessageReceived;
+
+            e.Error += this.OnClientError;
+
+            Task.Run(() => this.HandleClientAsync(e));
         }
 
-        private void OnMessageReceived(object sender, Message msg)
+        private async void HandleClientAsync(SmartSocketClient client)
         {
-            if (MessageReceived != null)
+            while (client.IsConnected)
             {
-                MessageReceived(this, msg);
+                Message e = await client.ReceiveAsync() as Message;
+                if (e != null)
+                {
+                    await client.SendAsync(new SocketMessage("Ok", "DgmlTestMonitor")); // ack
+                    OnMessageReceived(e);
+                }
             }
         }
 
-        private void OnMessageReceived(ClearTextMessage message)
+        private void OnMessageReceived(Message m)
         {
             if (MessageReceived != null)
             {
-                MessageReceived(this, message);
+                MessageReceived(this, m);
             }
+        }
+
+        private void OnClientError(object sender, Exception e)
+        {
+            // todo: show the error!
         }
 
         /// <summary>
@@ -80,7 +100,7 @@ namespace LovettSoftware.DgmlTestModeling
         /// </summary>
         public void Pause()
         {
-            server.Pause();
+            //server.Pause();
         }
 
         /// <summary>
@@ -88,7 +108,7 @@ namespace LovettSoftware.DgmlTestModeling
         /// </summary>
         public bool IsPaused
         {
-            get { return server.IsPaused; }
+            get { return false; } // server.IsPaused; }
         }
 
         /// <summary>
@@ -96,7 +116,7 @@ namespace LovettSoftware.DgmlTestModeling
         /// </summary>
         public void Resume()
         {
-            server.Resume();
+            // server.Resume();
         }
         
         /// <summary>
@@ -124,9 +144,9 @@ namespace LovettSoftware.DgmlTestModeling
         {
             if (server != null)
             {
-                server.Close();
-                server = null;
+                server.Stop();
             }
+            server = null;
         }
 
     }

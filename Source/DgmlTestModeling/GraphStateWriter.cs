@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.GraphModel;
+﻿using Microsoft.Coyote.SmartSockets;
+using Microsoft.VisualStudio.GraphModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,6 +21,7 @@ namespace LovettSoftware.DgmlTestModeling
         internal static string NavigateToNodePrefix = "NavigateToNode:";
         internal static string NavigateLinkPrefix = "NavigateLink:";
         internal static int DefaultPort = 18777;
+        private CancellationTokenSource source;
 
         /// <summary>
         /// Construct new graph state writer
@@ -27,50 +29,49 @@ namespace LovettSoftware.DgmlTestModeling
         /// <param name="log">Separate log file in addition to the named pipe</param>
         public GraphStateWriter(TextWriter log)
         {
-            pipe = new SmartSocketClient();
-            pipe.Connected += OnPipeConnected;
         }
 
         /// <summary>
         /// Connect to the server so we can start sending messages
         /// </summary>
         /// <returns></returns>
-        public Task Connect()
+        public async Task Connect()
         {
-            pipe.ConnectAsync("localhost", DefaultPort);
-            return Task.Run(() => { connectedEvent.WaitOne(); });
-        }
-
-        private void OnPipeConnected(object sender, EventArgs e)
-        {
-            connectedEvent.Set();
+            this.source = new CancellationTokenSource();
+            var resolver = new SmartSocketTypeResolver(typeof(Message),
+                                                       typeof(ConnectedMessage),
+                                                       typeof(ClearTextMessage),
+                                                       typeof(LoadGraphMessage),
+                                                       typeof(NavigateNodeMessage),
+                                                       typeof(NavigateLinkMessage));
+            this.pipe = await SmartSocketClient.FindServerAsync("DgmlTestMonitor", "GraphStateWriter", resolver, source.Token);
         }
 
         /// <summary>
         /// Instruct client to load the given graph.
         /// </summary>
         /// <param name="path">Full path to .dgml file</param>
-        public void LoadGraph(string path)
+        public async Task LoadGraph(string path)
         {
-            pipe.SendAsync(new LoadGraphMessage(path));
+            await pipe.SendReceiveAsync(new LoadGraphMessage(path));
         }
 
         /// <summary>
         /// Instruct client to navigate to the given node
         /// </summary>
         /// <param name="node">A GraphNode object belonging to the graph loaded in LoadGraph</param>
-        public void NavigateToNode(GraphNode node)
+        public async Task NavigateToNode(GraphNode node)
         {
-            pipe.SendAsync(new NavigateNodeMessage(node.Id.ToString(), node.Label));
+            await pipe.SendReceiveAsync(new NavigateNodeMessage(node.Id.ToString(), node.Label));
         }
 
         /// <summary>
         /// Instruct client to navigate the given link
         /// </summary>
         /// <param name="link">A GraphLink object belonging to the graph loaded in LoadGraph</param>
-        public void NavigateLink(GraphLink link)
+        public async Task NavigateLink(GraphLink link)
         {
-            pipe.SendAsync(new NavigateLinkMessage(link.Source.Id.ToString(), link.Source.Label, link.Target.Id.ToString(), link.Target.Label, link.Label, link.Index));
+            await pipe.SendReceiveAsync(new NavigateLinkMessage(link.Source.Id.ToString(), link.Source.Label, link.Target.Id.ToString(), link.Target.Label, link.Label, link.Index));
         }
         
         /// <summary>
@@ -78,10 +79,10 @@ namespace LovettSoftware.DgmlTestModeling
         /// </summary>
         /// <param name="format">String to be formatted using string.format</param>
         /// <param name="args">The arguments</param>
-        public void WriteMessage(string format, params object[] args)
+        public async Task WriteMessage(string format, params object[] args)
         {
             string msg = string.Format(format, args);
-            pipe.SendAsync(new ClearTextMessage(msg));
+            await pipe.SendReceiveAsync(new ClearTextMessage(msg));
         }
 
         /// <summary>
@@ -89,6 +90,10 @@ namespace LovettSoftware.DgmlTestModeling
         /// </summary>
         public void Close()
         {
+            if (this.source != null)
+            {
+                this.source.Cancel();
+            }
             using (pipe)
             {
                 pipe = null;

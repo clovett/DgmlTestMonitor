@@ -7,6 +7,189 @@
 <doc>
   <assembly>
     <name>LovettSoftware.DgmlTestModeling</name>
+    <class name="SmartSocketClient" namespace="Microsoft.Coyote.SmartSockets" static="true">
+      <implements name="IDisposable" namespace="System" />
+      <field name="DisconnectMessageId" public="true" static="true" value="DisconnectMessageId.3d9cd318-fcae-4a4f-ae63-34907be2700a">
+        <type name="string" namespace="System" />
+      </field>
+      <field name="ConnectedMessageId" public="true" static="true" value="ConnectedMessageId.822280ed-26f5-4cdd-b45c-412e05d1005a">
+        <type name="string" namespace="System" />
+      </field>
+      <field name="MessageAck" public="true" static="true" value="MessageAck.822280ed-26f5-4cdd-b45c-412e05d1005a">
+        <type name="string" namespace="System" />
+      </field>
+      <field name="ErrorMessageId" public="true" static="true" value="ErrorMessageId.385ff3c1-84d8-491a-a8b3-e2a9e8f0e256">
+        <type name="string" namespace="System" />
+      </field>
+      <field name="OpenBackChannelMessageId" public="true" static="true" value="OpenBackChannel.bd89da83-95c8-42e7-bf4e-6e7d0168754a">
+        <type name="string" namespace="System" />
+      </field>
+      <method name="FindServerAsync" static="true" public="true">
+        <!--nodocs-->
+        <params>
+          <arg var="serviceName" name="void" namespace="System" />
+          <arg var="clientName" name="SmartSocketClient" namespace="Microsoft.Coyote.SmartSockets" />
+          <arg var="resolver" name="string" namespace="System" />
+          <arg var="token" name="string" namespace="System" />
+          <arg var="udpGroupAddress" name="SmartSocketTypeResolver" namespace="Microsoft.Coyote.SmartSockets" />
+          <arg var="udpGroupPort" name="CancellationToken" namespace="System.Threading" />
+        </params>
+        <returns name="Task`1" namespace="System.Threading.Tasks" />
+      </method>
+      <method name="OpenBackChannel" public="true">
+        <!--nodocs-->
+        <params>
+          <arg var="connectedHandler" name="void" namespace="System" />
+        </params>
+        <returns name="Task`1" namespace="System.Threading.Tasks" />
+      </method>
+      <method name="SendReceiveAsync" public="true">
+        <!--nodocs-->
+        <params>
+          <arg var="msg" name="void" namespace="System" />
+        </params>
+        <returns name="Task`1" namespace="System.Threading.Tasks" />
+      </method>
+      <method name="SendAsync" public="true">
+        <!--nodocs-->
+        <params>
+          <arg var="msg" name="SocketMessage" namespace="Microsoft.Coyote.SmartSockets" />
+        </params>
+        <returns name="Task" namespace="System.Threading.Tasks" />
+      </method>
+      <method name="InternalSendAsync" public="true">
+        <!--nodocs-->
+        <params>
+          <arg var="msg" name="SocketMessage" namespace="Microsoft.Coyote.SmartSockets" />
+        </params>
+        <returns name="Task" namespace="System.Threading.Tasks" />
+      </method>
+      <method name="ReceiveAsync" public="true">
+        <!--nodocs-->
+        <returns name="Task`1" namespace="System.Threading.Tasks" />
+      </method>
+      <method name="Dispose" public="true" virtual="true">
+        <!--nodocs-->
+        <returns name="void" namespace="System" />
+      </method>
+      <property name="Name" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+      <property name="ServerName" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+      <property name="IsConnected" public="true" get="true">
+        <type name="Boolean" namespace="System" />
+      </property>
+      <property name="BackChannel" public="true" get="true" set="true">
+        <type name="SmartSocketClient" namespace="Microsoft.Coyote.SmartSockets" />
+      </property>
+      <event name="Error" public="true">
+        <type name="EventHandler&lt;Exception&gt;" namespace="System" />
+      </event>
+      <event name="Disconnected" public="true">
+        <type name="EventHandler" namespace="System" />
+      </event>
+    </class>
+    <class name="SmartSocketServer" namespace="Microsoft.Coyote.SmartSockets" static="true">
+      <method name="StartServer" static="true" public="true">
+        <!--nodocs-->
+        <params>
+          <arg var="name" name="string" namespace="System" />
+          <arg var="resolver" name="SmartSocketTypeResolver" namespace="Microsoft.Coyote.SmartSockets" />
+          <arg var="ipAddress" name="string" namespace="System" />
+          <arg var="udpGroupAddress" name="string" namespace="System" />
+          <arg var="udpGroupPort" name="Int32" namespace="System" />
+        </params>
+        <returns name="SmartSocketServer" namespace="Microsoft.Coyote.SmartSockets" />
+      </method>
+      <method name="BroadcastAsync" public="true">
+        <!--nodocs-->
+        <params>
+          <arg var="message" name="SocketMessage" namespace="Microsoft.Coyote.SmartSockets" />
+        </params>
+        <returns name="Task" namespace="System.Threading.Tasks" />
+      </method>
+      <method name="Stop" public="true">
+        <!--nodocs-->
+        <returns name="void" namespace="System" />
+      </method>
+      <property name="GroupAddress" public="true" get="true" set="true">
+        <type name="IPAddress" namespace="System.Net" />
+      </property>
+      <property name="GroupPort" public="true" get="true" set="true">
+        <type name="Int32" namespace="System" />
+      </property>
+      <property name="EndPoint" public="true" get="true" set="true">
+        <type name="IPEndPoint" namespace="System.Net" />
+      </property>
+      <event name="ClientConnected" public="true">
+        <type name="EventHandler&lt;SmartSocketClient&gt;" namespace="System" />
+      </event>
+      <event name="ClientDisconnected" public="true">
+        <type name="EventHandler&lt;SmartSocketClient&gt;" namespace="System" />
+      </event>
+      <event name="BackChannelOpened" public="true">
+        <type name="EventHandler&lt;SmartSocketClient&gt;" namespace="System" />
+      </event>
+    </class>
+    <class name="SmartSocketTypeResolver" namespace="Microsoft.Coyote.SmartSockets" static="true">
+      <extends name="DataContractResolver" namespace="System.Runtime.Serialization" />
+      <method class="SmartSocketTypeResolver" name="#ctor">
+        <!--nodocs-->
+      </method>
+      <method class="SmartSocketTypeResolver" name="#ctor">
+        <!--nodocs-->
+        <params>
+          <arg var="knownTypes" name="Type[]" namespace="System" />
+        </params>
+      </method>
+      <method class="SmartSocketTypeResolver" name="#ctor">
+        <!--nodocs-->
+        <params>
+          <arg var="knownTypes" name="IEnumerable&lt;Type&gt;" namespace="System.Collections.Generic" />
+        </params>
+      </method>
+      <method name="ResolveName" public="true" virtual="true">
+        <!--nodocs-->
+        <params>
+          <arg var="typeName" name="string" namespace="System" />
+          <arg var="typeNamespace" name="string" namespace="System" />
+          <arg var="declaredType" name="Type" namespace="System" />
+          <arg var="knownTypeResolver" name="DataContractResolver" namespace="System.Runtime.Serialization" />
+        </params>
+        <returns name="Type" namespace="System" />
+      </method>
+      <method name="TryResolveType" public="true" virtual="true">
+        <!--nodocs-->
+        <params>
+          <arg var="type" name="Type" namespace="System" />
+          <arg var="declaredType" name="Type" namespace="System" />
+          <arg var="knownTypeResolver" name="DataContractResolver" namespace="System.Runtime.Serialization" />
+          <arg var="typeName" by="ref" name="XmlDictionaryString@" namespace="System.Xml" />
+          <arg var="typeNamespace" by="ref" name="XmlDictionaryString@" namespace="System.Xml" />
+        </params>
+        <returns name="Boolean" namespace="System" />
+      </method>
+    </class>
+    <class name="SocketMessage" namespace="Microsoft.Coyote.SmartSockets" static="true">
+      <method class="SocketMessage" name="#ctor">
+        <!--nodocs-->
+        <params>
+          <arg var="id" name="string" namespace="System" />
+          <arg var="sender" name="string" namespace="System" />
+        </params>
+      </method>
+      <property name="Id" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+      <property name="Sender" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+      <property name="Message" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+    </class>
     <class name="DgmlTestModelSchema" namespace="LovettSoftware.DgmlTestModeling" static="true">
       <field name="Schema" public="true" static="true">
         <type name="GraphSchema" namespace="Microsoft.VisualStudio.GraphModel" />
@@ -72,7 +255,7 @@
       </method>
       <method name="Start" public="true">
         <!--nodocs-->
-        <returns name="Task" namespace="System.Threading.Tasks" />
+        <returns name="void" namespace="System" />
       </method>
       <method name="Pause" public="true">
         <!--nodocs-->
@@ -109,21 +292,21 @@
         <params>
           <arg var="path" name="string" namespace="System" />
         </params>
-        <returns name="void" namespace="System" />
+        <returns name="Task" namespace="System.Threading.Tasks" />
       </method>
       <method name="NavigateToNode" public="true">
         <!--nodocs-->
         <params>
           <arg var="node" name="GraphNode" namespace="Microsoft.VisualStudio.GraphModel" />
         </params>
-        <returns name="void" namespace="System" />
+        <returns name="Task" namespace="System.Threading.Tasks" />
       </method>
       <method name="NavigateLink" public="true">
         <!--nodocs-->
         <params>
           <arg var="link" name="GraphLink" namespace="Microsoft.VisualStudio.GraphModel" />
         </params>
-        <returns name="void" namespace="System" />
+        <returns name="Task" namespace="System.Threading.Tasks" />
       </method>
       <method name="WriteMessage" public="true">
         <!--nodocs-->
@@ -131,7 +314,7 @@
           <arg var="format" name="string" namespace="System" />
           <arg var="args" name="Object[]" namespace="System" />
         </params>
-        <returns name="void" namespace="System" />
+        <returns name="Task" namespace="System.Threading.Tasks" />
       </method>
       <method name="Close" public="true">
         <!--nodocs-->
@@ -162,13 +345,12 @@
       </field>
     </enum>
     <class name="Message" namespace="LovettSoftware.DgmlTestModeling" static="true">
-      <field name="MessageHeader" public="true" static="true">
-        <type name="UInt32" namespace="System" />
-      </field>
+      <extends name="SocketMessage" namespace="Microsoft.Coyote.SmartSockets" />
       <method class="Message" name="#ctor">
         <!--nodocs-->
         <params>
           <arg var="type" name="MessageType" namespace="LovettSoftware.DgmlTestModeling" />
+          <arg var="message" name="string" namespace="System" />
         </params>
       </method>
       <method name="Merge" public="true" virtual="true">
@@ -178,38 +360,10 @@
         </params>
         <returns name="Boolean" namespace="System" />
       </method>
-      <method name="Write" public="true" virtual="true">
-        <!--nodocs-->
-        <params>
-          <arg var="writer" name="BinaryWriter" namespace="System.IO" />
-        </params>
-        <returns name="void" namespace="System" />
-      </method>
-      <method name="Read" public="true" virtual="true">
-        <!--nodocs-->
-        <params>
-          <arg var="reader" name="BinaryReader" namespace="System.IO" />
-        </params>
-        <returns name="void" namespace="System" />
-      </method>
-      <method name="Create" static="true" public="true">
-        <!--nodocs-->
-        <params>
-          <arg var="reader" name="BinaryReader" namespace="System.IO" />
-        </params>
-        <returns name="Message" namespace="LovettSoftware.DgmlTestModeling" />
-      </method>
-      <method name="ToArray" public="true">
-        <!--nodocs-->
-        <returns name="Byte[]" namespace="System" />
-      </method>
-      <property name="MessageId" public="true" get="true" set="true">
-        <type name="Int64" namespace="System" />
-      </property>
       <property name="Timestamp" public="true" get="true" set="true">
         <type name="Int64" namespace="System" />
       </property>
-      <property name="Type" public="true" get="true">
+      <property name="Type" public="true" get="true" set="true">
         <type name="MessageType" namespace="LovettSoftware.DgmlTestModeling" />
       </property>
     </class>
@@ -223,20 +377,6 @@
         <params>
           <arg var="user" name="string" namespace="System" />
         </params>
-      </method>
-      <method name="Write" public="true" virtual="true">
-        <!--nodocs-->
-        <params>
-          <arg var="writer" name="BinaryWriter" namespace="System.IO" />
-        </params>
-        <returns name="void" namespace="System" />
-      </method>
-      <method name="Read" public="true" virtual="true">
-        <!--nodocs-->
-        <params>
-          <arg var="reader" name="BinaryReader" namespace="System.IO" />
-        </params>
-        <returns name="void" namespace="System" />
       </method>
       <property name="User" public="true" get="true" set="true">
         <type name="string" namespace="System" />
@@ -253,23 +393,6 @@
           <arg var="text" name="string" namespace="System" />
         </params>
       </method>
-      <method name="Write" public="true" virtual="true">
-        <!--nodocs-->
-        <params>
-          <arg var="writer" name="BinaryWriter" namespace="System.IO" />
-        </params>
-        <returns name="void" namespace="System" />
-      </method>
-      <method name="Read" public="true" virtual="true">
-        <!--nodocs-->
-        <params>
-          <arg var="reader" name="BinaryReader" namespace="System.IO" />
-        </params>
-        <returns name="void" namespace="System" />
-      </method>
-      <property name="Message" public="true" get="true" set="true">
-        <type name="string" namespace="System" />
-      </property>
     </class>
     <class name="LoadGraphMessage" namespace="LovettSoftware.DgmlTestModeling" static="true">
       <extends name="Message" namespace="LovettSoftware.DgmlTestModeling" />
@@ -281,20 +404,6 @@
         <params>
           <arg var="path" name="string" namespace="System" />
         </params>
-      </method>
-      <method name="Write" public="true" virtual="true">
-        <!--nodocs-->
-        <params>
-          <arg var="writer" name="BinaryWriter" namespace="System.IO" />
-        </params>
-        <returns name="void" namespace="System" />
-      </method>
-      <method name="Read" public="true" virtual="true">
-        <!--nodocs-->
-        <params>
-          <arg var="reader" name="BinaryReader" namespace="System.IO" />
-        </params>
-        <returns name="void" namespace="System" />
       </method>
       <property name="Path" public="true" get="true" set="true">
         <type name="string" namespace="System" />
@@ -311,20 +420,6 @@
           <arg var="nodeId" name="string" namespace="System" />
           <arg var="nodeLabel" name="string" namespace="System" />
         </params>
-      </method>
-      <method name="Write" public="true" virtual="true">
-        <!--nodocs-->
-        <params>
-          <arg var="writer" name="BinaryWriter" namespace="System.IO" />
-        </params>
-        <returns name="void" namespace="System" />
-      </method>
-      <method name="Read" public="true" virtual="true">
-        <!--nodocs-->
-        <params>
-          <arg var="reader" name="BinaryReader" namespace="System.IO" />
-        </params>
-        <returns name="void" namespace="System" />
       </method>
       <property name="NodeId" public="true" get="true" set="true">
         <type name="string" namespace="System" />
@@ -348,20 +443,6 @@
           <arg var="label" name="string" namespace="System" />
           <arg var="index" name="Int32" namespace="System" />
         </params>
-      </method>
-      <method name="Write" public="true" virtual="true">
-        <!--nodocs-->
-        <params>
-          <arg var="writer" name="BinaryWriter" namespace="System.IO" />
-        </params>
-        <returns name="void" namespace="System" />
-      </method>
-      <method name="Read" public="true" virtual="true">
-        <!--nodocs-->
-        <params>
-          <arg var="reader" name="BinaryReader" namespace="System.IO" />
-        </params>
-        <returns name="void" namespace="System" />
       </method>
       <property name="SourceNodeId" public="true" get="true" set="true">
         <type name="string" namespace="System" />
@@ -392,88 +473,6 @@
       <property name="Message" public="true" get="true" set="true">
         <type name="Message" namespace="LovettSoftware.DgmlTestModeling" />
       </property>
-    </class>
-    <class name="ConnectionLostEventArgs" namespace="LovettSoftware.DgmlTestModeling" static="true">
-      <method class="ConnectionLostEventArgs" name="#ctor">
-        <!--nodocs-->
-      </method>
-      <property name="ReceiveError" public="true" get="true" set="true">
-        <type name="Exception" namespace="System" />
-      </property>
-      <property name="AutoReconnect" public="true" get="true" set="true">
-        <type name="Boolean" namespace="System" />
-      </property>
-    </class>
-    <class name="SmartSocketClient" namespace="LovettSoftware.DgmlTestModeling" static="true">
-      <implements name="IDisposable" namespace="System" />
-      <method class="SmartSocketClient" name="#ctor">
-        <!--nodocs-->
-      </method>
-      <method class="SmartSocketClient" name="#ctor">
-        <!--nodocs-->
-        <params>
-          <arg var="socket" name="StreamSocket" namespace="Windows.Networking.Sockets" />
-        </params>
-      </method>
-      <method name="Dispose" public="true" virtual="true">
-        <!--nodocs-->
-        <returns name="void" namespace="System" />
-      </method>
-      <method name="ConnectAsync" public="true">
-        <!--nodocs-->
-        <params>
-          <arg var="server" name="string" namespace="System" />
-          <arg var="port" name="Int32" namespace="System" />
-        </params>
-        <returns name="void" namespace="System" />
-      </method>
-      <method name="SendAsync" public="true">
-        <!--nodocs-->
-        <params>
-          <arg var="message" name="Message" namespace="LovettSoftware.DgmlTestModeling" />
-        </params>
-        <returns name="void" namespace="System" />
-      </method>
-      <event name="Error" public="true">
-        <type name="EventHandler&lt;Exception&gt;" namespace="System" />
-      </event>
-      <event name="ConnectionLost" public="true">
-        <type name="EventHandler&lt;ConnectionLostEventArgs&gt;" namespace="System" />
-      </event>
-      <event name="Connected" public="true">
-        <type name="EventHandler" namespace="System" />
-      </event>
-      <event name="MessageReceived" public="true">
-        <type name="EventHandler&lt;Message&gt;" namespace="System" />
-      </event>
-    </class>
-    <class name="SmartSocketListener" namespace="LovettSoftware.DgmlTestModeling" static="true" sealed="true">
-      <method class="SmartSocketListener" name="#ctor">
-        <!--nodocs-->
-      </method>
-      <method name="Close" public="true">
-        <!--nodocs-->
-        <returns name="void" namespace="System" />
-      </method>
-      <method name="StartListening" public="true">
-        <!--nodocs-->
-        <params>
-          <arg var="portNumber" name="Int32" namespace="System" />
-        </params>
-        <returns name="Task" namespace="System.Threading.Tasks" />
-      </method>
-      <property name="IsPaused" public="true" get="true" set="true">
-        <type name="Boolean" namespace="System" />
-      </property>
-      <event name="ClientConnected" public="true">
-        <type name="EventHandler&lt;SmartSocketClient&gt;" namespace="System" />
-      </event>
-      <event name="ClientDisconnected" public="true">
-        <type name="EventHandler&lt;SmartSocketClient&gt;" namespace="System" />
-      </event>
-      <event name="AdapterFound" public="true">
-        <type name="EventHandler&lt;String&gt;" namespace="System" />
-      </event>
     </class>
   </assembly>
 </doc>

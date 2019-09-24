@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.89
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DgmlTestMonitor.vs2019", "DgmlTestMonitor.vs2019.csproj", "{971C77E4-8897-4E7F-97E3-7851726234E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DgmlTestModeling.vs2019", "..\DgmlTestModeling\DgmlTestModeling.vs2019.csproj", "{2FEE24BA-85FD-4863-8F3A-41AE0A6DC8CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{971C77E4-8897-4E7F-97E3-7851726234E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{971C77E4-8897-4E7F-97E3-7851726234E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{971C77E4-8897-4E7F-97E3-7851726234E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{971C77E4-8897-4E7F-97E3-7851726234E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FEE24BA-85FD-4863-8F3A-41AE0A6DC8CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FEE24BA-85FD-4863-8F3A-41AE0A6DC8CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FEE24BA-85FD-4863-8F3A-41AE0A6DC8CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FEE24BA-85FD-4863-8F3A-41AE0A6DC8CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {80C6CEC8-A0F4-4040-9A88-F8AFF4B88AFA}
+	EndGlobalSection
+EndGlobal

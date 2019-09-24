@@ -51,7 +51,7 @@ namespace DgmlTestMonitor
 
             reader = new GraphStateReader();
             reader.MessageReceived += OnMessageArrived;
-            var nowait = reader.Start();
+            reader.Start();
         }
 
         void OnBreakPoint(GraphObject trigger)

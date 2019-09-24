@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>LovettSoftware.DgmlTestModeling.2019.dll</id>
+    <version>3.6.0</version>
+    <authors>Chris Lovett</authors>
+    <owners>Chris Lovett</owners>
+    <licenseUrl>http://opensource.org/licenses/ms-pl</licenseUrl>
+    <projectUrl>http://www.lovettsoftware.com/Downloads/DgmlTestModel/Readme.htm</projectUrl>
+    <iconUrl>http://www.lovettsoftware.com/Downloads/DgmlTestModel/Dgml.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This library contains the DgmlTestModel class which you can use to execute a DGML test model. The execution state is writen to a named pipe so that the DGML Test Monitor VSIX package can animate the progress during test execution. </description>
+    <releaseNotes>Fixed some bugs, and improved performance.</releaseNotes>
+    <copyright>Copyright © 2019 Lovett Software</copyright>
+    <tags>DGML Test Modeling</tags>
+  </metadata>
+</package>

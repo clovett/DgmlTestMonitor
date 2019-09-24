@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph Layout="Sugiyama" ZoomLevel="-1" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="Bar" Bounds="166.901833324417,10.02,50,25.96" UseManualLocation="True" />
+    <Node Id="Foo" Bounds="0,0,50,25.96" />
+    <Node Id="Help" Bounds="54.9018333244167,96.02,50,25.96" UseManualLocation="True" />
+  </Nodes>
+  <Links>
+    <Link Source="Bar" Target="Help" Bounds="103.944371295891,35.98,71.0532759820144,54.5587654861896" />
+    <Link Source="Foo" Target="Bar" Bounds="50,14.4808822552182,107.918008675006,6.47888896955197" />
+    <Link Source="Help" Target="Foo" Bounds="36.8889297662474,33.7730221457173,35.5912643522651,62.2469778542827" />
+  </Links>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="Layout" DataType="System.String" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+    <Property Id="ZoomLevel" DataType="System.String" />
+  </Properties>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Active" ValueLabel="True">
+      <Condition Expression="HasCategory('Active')" />
+      <Setter Property="Background" Value="#FF5A9747" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Comment" ValueLabel="Has comment">
+      <Condition Expression="HasCategory('Comment')" />
+      <Setter Property="Background" Value="#FFFFFACD" />
+      <Setter Property="Stroke" Value="#FFE5C365" />
+      <Setter Property="StrokeThickness" Value="1" />
+      <Setter Property="NodeRadius" Value="2" />
+      <Setter Property="MaxWidth" Value="250" />
+    </Style>
+  </Styles>
+</DirectedGraph>
