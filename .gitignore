@@ -286,4 +286,6 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
-/Source/DgmlTestModeling/Package/lib/net40
+/Source/DgmlTestModeling/Package/lib/net40/
+/Source/DgmlTestModeling/Package/lib/net472/
+
