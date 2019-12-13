@@ -57,13 +57,6 @@
         </params>
         <returns name="Task" namespace="System.Threading.Tasks" />
       </method>
-      <method name="InternalSendAsync" public="true">
-        <!--nodocs-->
-        <params>
-          <arg var="msg" name="SocketMessage" namespace="Microsoft.Coyote.SmartSockets" />
-        </params>
-        <returns name="Task" namespace="System.Threading.Tasks" />
-      </method>
       <method name="ReceiveAsync" public="true">
         <!--nodocs-->
         <returns name="Task`1" namespace="System.Threading.Tasks" />
@@ -409,6 +402,68 @@
         <type name="string" namespace="System" />
       </property>
     </class>
+    <class name="CreateNodeMessage" namespace="LovettSoftware.DgmlTestModeling" static="true">
+      <extends name="Message" namespace="LovettSoftware.DgmlTestModeling" />
+      <method class="CreateNodeMessage" name="#ctor">
+        <!--nodocs-->
+      </method>
+      <method class="CreateNodeMessage" name="#ctor">
+        <!--nodocs-->
+        <params>
+          <arg var="nodeId" name="string" namespace="System" />
+          <arg var="nodeLabel" name="string" namespace="System" />
+          <arg var="category" name="string" namespace="System" />
+          <arg var="isGroup" name="Boolean" namespace="System" />
+          <arg var="parentGroupId" name="string" namespace="System" />
+        </params>
+      </method>
+      <property name="NodeId" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+      <property name="NodeLabel" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+      <property name="Category" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+      <property name="IsGroup" public="true" get="true" set="true">
+        <type name="Boolean" namespace="System" />
+      </property>
+      <property name="ParentGroupId" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+    </class>
+    <class name="CreateLinkMessage" namespace="LovettSoftware.DgmlTestModeling" static="true">
+      <extends name="Message" namespace="LovettSoftware.DgmlTestModeling" />
+      <method class="CreateLinkMessage" name="#ctor">
+        <!--nodocs-->
+      </method>
+      <method class="CreateLinkMessage" name="#ctor">
+        <!--nodocs-->
+        <params>
+          <arg var="sourceId" name="string" namespace="System" />
+          <arg var="targetId" name="string" namespace="System" />
+          <arg var="label" name="string" namespace="System" />
+          <arg var="index" name="Int32" namespace="System" />
+          <arg var="category" name="string" namespace="System" />
+        </params>
+      </method>
+      <property name="SourceId" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+      <property name="TargetId" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+      <property name="Label" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+      <property name="Index" public="true" get="true" set="true">
+        <type name="Int32" namespace="System" />
+      </property>
+      <property name="Category" public="true" get="true" set="true">
+        <type name="string" namespace="System" />
+      </property>
+    </class>
     <class name="NavigateNodeMessage" namespace="LovettSoftware.DgmlTestModeling" static="true">
       <extends name="Message" namespace="LovettSoftware.DgmlTestModeling" />
       <method class="NavigateNodeMessage" name="#ctor">
@@ -418,13 +473,9 @@
         <!--nodocs-->
         <params>
           <arg var="nodeId" name="string" namespace="System" />
-          <arg var="nodeLabel" name="string" namespace="System" />
         </params>
       </method>
       <property name="NodeId" public="true" get="true" set="true">
-        <type name="string" namespace="System" />
-      </property>
-      <property name="NodeLabel" public="true" get="true" set="true">
         <type name="string" namespace="System" />
       </property>
     </class>
@@ -437,30 +488,14 @@
         <!--nodocs-->
         <params>
           <arg var="srcNodeId" name="string" namespace="System" />
-          <arg var="srcNodeLabel" name="string" namespace="System" />
           <arg var="targetNodeId" name="string" namespace="System" />
-          <arg var="targetNodeLabel" name="string" namespace="System" />
-          <arg var="label" name="string" namespace="System" />
-          <arg var="index" name="Int32" namespace="System" />
         </params>
       </method>
       <property name="SourceNodeId" public="true" get="true" set="true">
         <type name="string" namespace="System" />
       </property>
-      <property name="SourceNodeLabel" public="true" get="true" set="true">
-        <type name="string" namespace="System" />
-      </property>
       <property name="TargetNodeId" public="true" get="true" set="true">
         <type name="string" namespace="System" />
-      </property>
-      <property name="TargetNodeLabel" public="true" get="true" set="true">
-        <type name="string" namespace="System" />
-      </property>
-      <property name="Label" public="true" get="true" set="true">
-        <type name="string" namespace="System" />
-      </property>
-      <property name="Index" public="true" get="true" set="true">
-        <type name="Int32" namespace="System" />
       </property>
     </class>
     <class name="MessageEventArgs" namespace="LovettSoftware.DgmlTestModeling" static="true">

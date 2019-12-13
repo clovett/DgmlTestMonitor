@@ -11,20 +11,34 @@ using System.Xml;
 
 namespace Microsoft.Coyote.SmartSockets
 {
+    /// <summary>
+    /// A special DataContractResolver used by SmartSocket class to resolve serialized types.
+    /// </summary>
     public class SmartSocketTypeResolver : DataContractResolver
     {
         private readonly Dictionary<string, Type> TypeMap = new Dictionary<string, Type>();
 
+        /// <summary>
+        /// Construct new SmartSocketTypeResolver object, with the SocketMessage type automatically registered.
+        /// </summary>
         public SmartSocketTypeResolver()
         {
             this.AddBaseTypes();
         }
 
+        /// <summary>
+        /// Construct new SmartSocketTypeResolver object with the given set of known serializable types.
+        /// </summary>
+        /// <param name="knownTypes">The list of types to register</param>
         public SmartSocketTypeResolver(params Type[] knownTypes)
         {
             this.AddTypes(knownTypes);
         }
 
+        /// <summary>
+        /// Construct new SmartSocketTypeResolver object with the given set of known serializable types.
+        /// </summary>
+        /// <param name="knownTypes">The list of types to register</param>
         public SmartSocketTypeResolver(IEnumerable<Type> knownTypes)
         {
             this.AddTypes(knownTypes);
@@ -47,6 +61,9 @@ namespace Microsoft.Coyote.SmartSockets
             }
         }
 
+        /// <summary>
+        /// Implementation of DataContractResolver method
+        /// </summary>
         public override Type ResolveName(string typeName, string typeNamespace, Type declaredType, DataContractResolver knownTypeResolver)
         {
             string fullName = typeName;
@@ -65,6 +82,9 @@ namespace Microsoft.Coyote.SmartSockets
             return t;
         }
 
+        /// <summary>
+        /// Implementation of DataContractResolver method
+        /// </summary>
         public override bool TryResolveType(Type type, Type declaredType, DataContractResolver knownTypeResolver, out XmlDictionaryString typeName, out XmlDictionaryString typeNamespace)
         {
             return knownTypeResolver.TryResolveType(type, declaredType, knownTypeResolver, out typeName, out typeNamespace);

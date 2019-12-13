@@ -103,8 +103,13 @@
                                               />
                                     <ContentPresenter ContentSource="Header" />
                                 </DockPanel>
-                                <DockPanel Grid.Row="1" MaxWidth="{Binding ElementName=headerPanel, Path=ActualWidth}" Visibility="{Binding ElementName=toggleButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">                                    
-                                    <ContentPresenter ContentSource="Content" />
+                                <DockPanel Grid.Row="1" MaxWidth="{Binding ElementName=headerPanel, Path=ActualWidth}" Visibility="{Binding ElementName=toggleButton, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <StackPanel Orientation="Vertical">
+                                        <ContentPresenter ContentSource="Content" />
+                                        <CheckBox Margin="5" HorizontalAlignment="Right" Checked="OnHideVideo">
+                                            <TextBlock Foreground="{DynamicResource {x:Static platformUI:EnvironmentColors.ToolWindowTextBrushKey}}" Text="Hide this video link"/>
+                                        </CheckBox>
+                                    </StackPanel>
                                 </DockPanel>
                             </Grid>
                         </Border>

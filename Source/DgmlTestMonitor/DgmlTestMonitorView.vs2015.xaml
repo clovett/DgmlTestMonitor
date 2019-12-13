@@ -48,12 +48,14 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <local:ToolbarButton x:Name="PauseButton" Click="OnTogglePause" ToolTip="Pause exection of the model" IconUri="Resources/Pause.png"/>
                 <local:ToolbarButton x:Name="SetBreakpointButton" Click="OnSetBreakpoint" ToolTip="Set breakpoint on selected node" Grid.Column="1" IconUri="Resources/Breakpoint.png"/>
                 <local:ToolbarButton x:Name="ClearBreakpointButton" Click="OnClearBreakpoint" ToolTip="Clear breakpoint on selected node" Grid.Column="2" IconUri="Resources/ClearBreakpoint.png"/>
                 <local:ToolbarButton x:Name="RemoveAllBreakpointsButton" Click="OnRemoveAllBreakpoints" ToolTip="Remove all breakpoints" Grid.Column="3" IconUri="Resources/RemoveAllBreakpoints.png" />
+                <local:ToolbarButton x:Name="SaveLog" Click="OnSaveLog" ToolTip="Save event log" Grid.Column="4" IconUri="Resources/Save.png" />
             </Grid>
         </Border>
 

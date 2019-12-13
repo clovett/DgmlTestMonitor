@@ -13,6 +13,11 @@ namespace Microsoft.Coyote.SmartSockets
     [DataContract]
     public class SocketMessage
     {
+        /// <summary>
+        /// Construct a new SocketMessage object.
+        /// </summary>
+        /// <param name="id">The message identifier</param>
+        /// <param name="sender">The message sender</param>
         public SocketMessage(string id, string sender)
         {
             this.Id = id;

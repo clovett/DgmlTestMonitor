@@ -32,11 +32,25 @@ namespace Microsoft.Coyote.SmartSockets
         private readonly SmartSocketTypeResolver Resolver;
         private readonly DataContractSerializer Serializer;
 
-        // Some standard message ids used for socket bookkeeping.
+        /// <summary>
+        /// Id of disconnect message
+        /// </summary>
         public const string DisconnectMessageId = "DisconnectMessageId.3d9cd318-fcae-4a4f-ae63-34907be2700a";
+        /// <summary>
+        /// Id of connect message
+        /// </summary>
         public const string ConnectedMessageId = "ConnectedMessageId.822280ed-26f5-4cdd-b45c-412e05d1005a";
+        /// <summary>
+        /// Id of message acknowledgments
+        /// </summary>
         public const string MessageAck = "MessageAck.822280ed-26f5-4cdd-b45c-412e05d1005a";
+        /// <summary>
+        /// Id of error message
+        /// </summary>
         public const string ErrorMessageId = "ErrorMessageId.385ff3c1-84d8-491a-a8b3-e2a9e8f0e256";
+        /// <summary>
+        /// Id of message used to open a back channel
+        /// </summary>
         public const string OpenBackChannelMessageId = "OpenBackChannel.bd89da83-95c8-42e7-bf4e-6e7d0168754a";
 
         internal SmartSocketClient(SmartSocketServer server, Socket client, SmartSocketTypeResolver resolver)
@@ -55,6 +69,9 @@ namespace Microsoft.Coyote.SmartSockets
 
         internal Socket Socket => this.Client;
 
+        /// <summary>
+        /// The name of the socket.
+        /// </summary>
         public string Name { get; set; }
 
         /// <summary>
@@ -251,8 +268,14 @@ namespace Microsoft.Coyote.SmartSockets
             return null;
         }
 
+        /// <summary>
+        /// The name of the server we are connected to.
+        /// </summary>
         public string ServerName { get; set; }
 
+        /// <summary>
+        /// Return true if the socket is currently connected.
+        /// </summary>
         public bool IsConnected => !this.Closed;
 
         /// <summary>
@@ -379,7 +402,7 @@ namespace Microsoft.Coyote.SmartSockets
             }
         }
 
-        public async Task InternalSendAsync(SocketMessage msg)
+        internal async Task InternalSendAsync(SocketMessage msg)
         {
             if (this.Closed)
             {
@@ -518,6 +541,9 @@ namespace Microsoft.Coyote.SmartSockets
             });
         }
 
+        /// <summary>
+        /// Dispose the SmartSocketClient
+        /// </summary>
         public void Dispose()
         {
             this.Close();
@@ -525,6 +551,9 @@ namespace Microsoft.Coyote.SmartSockets
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Cleanup the SmartSocketClient.
+        /// </summary>
         ~SmartSocketClient()
         {
             this.Close();

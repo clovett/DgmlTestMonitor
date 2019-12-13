@@ -3,6 +3,10 @@ using Microsoft.VisualStudio.GraphModel;
 using Microsoft.VisualStudio.GraphModel.Styles;
 using Microsoft.VisualStudio.Progression;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Settings;
+using Microsoft.VisualStudio.Shell.Settings;
+using Microsoft.Win32;
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -52,7 +56,49 @@ namespace DgmlTestMonitor
             reader = new GraphStateReader();
             reader.MessageReceived += OnMessageArrived;
             reader.Start();
+            this.VideoLink.Visibility = Visibility.Collapsed;
+            this.VideoLink.HideVideo += OnHideVideo;
         }
+
+        private void OnHideVideo(object sender, EventArgs e)
+        {
+            this.HideVideo = true;
+            VideoLink.Visibility = Visibility.Collapsed;
+        }
+
+        private const string SettingsCollectionName = "DgmlTestMonitor";
+        private const string HideVideoPropertyName = "HideVideoLink";
+
+        private bool HideVideo
+        {
+            get
+            {
+                SettingsManager settingsManager = new ShellSettingsManager((System.IServiceProvider)serviceProvider);
+                WritableSettingsStore userSettingsStore = settingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);
+                try
+                {
+                    if (userSettingsStore.PropertyExists(SettingsCollectionName, HideVideoPropertyName))
+                    {
+                        return userSettingsStore.GetBoolean(SettingsCollectionName, HideVideoPropertyName);
+                    }
+                }
+                catch
+                {
+                }
+                return false;
+            }
+            set
+            {
+                SettingsManager settingsManager = new ShellSettingsManager((System.IServiceProvider)serviceProvider);
+                WritableSettingsStore userSettingsStore = settingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);
+                if (!userSettingsStore.CollectionExists(SettingsCollectionName))
+                {
+                    userSettingsStore.CreateCollection(SettingsCollectionName);
+                }
+                userSettingsStore.SetBoolean(SettingsCollectionName, HideVideoPropertyName, true);
+            }
+        }
+
 
         void OnBreakPoint(GraphObject trigger)
         {
@@ -89,6 +135,10 @@ namespace DgmlTestMonitor
             {
                 tracker.ActiveWindowChanged += OnActiveWindowChanged;
                 OnActiveWindowChanged(this, new ActiveWindowChangedEventArgs(tracker.ActiveWindow));
+            }
+            if (!this.HideVideo)
+            {
+                this.VideoLink.Visibility = Visibility.Visible;
             }
         }
 
@@ -235,6 +285,18 @@ namespace DgmlTestMonitor
                     {
                         OnGraphLinkNavigated((NavigateLinkMessage)msg);
                     }
+                    else if (msg is CreateNodeMessage)
+                    {
+                        OnGraphNodeCreated((CreateNodeMessage)msg);
+                    }
+                    else if (msg is CreateLinkMessage)
+                    {
+                        OnGraphLinkCreated((CreateLinkMessage)msg);
+                    }
+                    else if (msg is NavigateNodeMessage)
+                    {
+                        OnGraphNodeNavigated((NavigateNodeMessage)msg);
+                    }
                     else if (msg is NavigateNodeMessage)
                     {
                         OnGraphNodeNavigated((NavigateNodeMessage)msg);
@@ -275,6 +337,71 @@ namespace DgmlTestMonitor
             this.disableAutoScroll = false;
         }
 
+        private GraphCategory GetOrCreateCategory(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+            var graph = graphControl.Graph;
+            foreach (GraphSchema s in graph.AllSchemas)
+            {
+                GraphCategory c = graph.DocumentSchema.FindCategory(id);
+                if (c != null)
+                {
+                    return c;
+                }
+            }
+            return graph.DocumentSchema.Categories.AddNewCategory(id);
+        }
+
+        private void OnGraphNodeCreated(CreateNodeMessage msg)
+        {
+            if (!string.IsNullOrEmpty(msg.NodeId))
+            {
+                Graph graph = graphControl.Graph;
+                string id = msg.NodeId;
+                string label = msg.NodeLabel;
+                GraphCategory c = GetOrCreateCategory(msg.Category);
+                GraphNode node = graph.Nodes.GetOrCreate(id, label, c);
+                if (!string.IsNullOrEmpty(msg.ParentGroupId))
+                {
+                    GraphNode parent = graph.Nodes.Get(msg.ParentGroupId);
+                    if (parent != null)
+                    {
+                        graph.Links.GetOrCreate(parent.Id, node.Id, null, GraphCommonSchema.Contains);
+                    }
+                }
+
+                if (breakpoints.Contains(node))
+                {
+                    reader.Pause();
+                    OnBreakPoint(node);
+                }
+            }
+        }
+        private void OnGraphLinkCreated(CreateLinkMessage msg)
+        {
+            if (!string.IsNullOrEmpty(msg.SourceId) && !string.IsNullOrEmpty(msg.TargetId))
+            {
+                Graph graph = graphControl.Graph;
+                GraphCategory c = GetOrCreateCategory(msg.Category);
+                GraphLink link = graph.Links.Get(msg.SourceId, msg.TargetId, msg.Index);
+                if (link == null)
+                {
+                    link = graph.Links.GetOrCreate(msg.SourceId, msg.TargetId, msg.Index);
+                    if (c != null)
+                    {
+                        link.AddCategory(c);
+                    }
+                    if (!string.IsNullOrEmpty(msg.Label))
+                    {
+                        link.Label = msg.Label;
+                    }
+                }
+            }
+        }
+
         int noMessageCount;
 
         private void OnGraphLoaded(LoadGraphMessage msg)
@@ -288,16 +415,17 @@ namespace DgmlTestMonitor
             if (!string.IsNullOrEmpty(msg.NodeId))
             {
                 string id = msg.NodeId;
-                string label = msg.NodeLabel;
                 Graph graph = graphControl.Graph;
-                GraphNode node = graph.Nodes.GetOrCreate(id, label, null);
-                if (breakpoints.Contains(node))
+                GraphNode node = graph.Nodes.Get(id);
+                if (node != null)
                 {
-                    reader.Pause();
-                    OnBreakPoint(node);
+                    if (breakpoints.Contains(node))
+                    {
+                        reader.Pause();
+                        OnBreakPoint(node);
+                    }
+                    AppendLog(new NodeViewModel() { Object = node, Label = GetNodeLabelOrId(node), Id = node.Id.ToString() });
                 }
-
-                AppendLog(new NodeViewModel() { Object = node, Label = GetNodeLabelOrId(node), Id=node.Id.ToString() });
             }
         }
 
@@ -306,38 +434,33 @@ namespace DgmlTestMonitor
             if (!string.IsNullOrEmpty(msg.SourceNodeId) && !string.IsNullOrEmpty(msg.TargetNodeId))
             {
                 string sid = msg.SourceNodeId;
-                string slabel = msg.SourceNodeLabel;
                 string tid = msg.TargetNodeId;
-                string tlabel = msg.TargetNodeLabel;
-                string label = msg.Label;
-                int index = msg.Index;
                 Graph graph = graphControl.Graph;
-                GraphNode source = graph.Nodes.GetOrCreate(sid, slabel, null);
-                GraphNode target = graph.Nodes.GetOrCreate(tid, tlabel, null);
-                GraphLink link = graph.Links.GetOrCreate(source.Id, target.Id, index);
-                if (!string.IsNullOrEmpty(label) && link.Label != label)
+                GraphNode source = graph.Nodes.Get(sid);
+                GraphNode target = graph.Nodes.Get(tid);
+                if (source != null && target != null)
                 {
-                    link.Label = label;
-                }
-                if (breakpoints.Contains(link))
-                {
-                    reader.Pause();
-                    OnBreakPoint(link);
-                }
+                    GraphLink link = graph.Links.Get(source.Id, target.Id);
+                    if (link != null)
+                    {
+                        if (breakpoints.Contains(link))
+                        {
+                            reader.Pause();
+                            OnBreakPoint(link);
+                        }
 
-                AppendLog(new LinkViewModel()
-                {
-                    Object = link,
-                    Source = GetNodeLabelOrId(link.Source),
-                    SourceId = link.Source.Id.ToString(),
-                    Target = GetNodeLabelOrId(link.Target),
-                    TargetId = link.Target.Id.ToString()
-                });
-
+                        AppendLog(new LinkViewModel()
+                        {
+                            Object = link,
+                            Source = GetNodeLabelOrId(link.Source),
+                            SourceId = link.Source.Id.ToString(),
+                            Target = GetNodeLabelOrId(link.Target),
+                            TargetId = link.Target.Id.ToString()
+                        });
+                    }
+                }
             }
-
         }
-
 
         string UnescapeQuotes(string s)
         {
@@ -786,7 +909,48 @@ namespace DgmlTestMonitor
             }
         }
 
-        #endregion 
+        #endregion
+
+        private void OnSaveLog(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog d = new SaveFileDialog();
+            d.Filter = "JSON file (*.json)|*.json";
+            if (d.ShowDialog() == true)
+            {
+                using (Stream stream = d.OpenFile())
+                {
+                    ExportLog(stream);
+                    stream.Close();
+                }
+            }
+        }
+
+        void ExportLog(Stream stream)
+        {
+            using (var writer = new StreamWriter(stream, System.Text.Encoding.UTF8))
+            {
+                writer.WriteLine("{ \"log\": [");
+                foreach (var item in this.logItems)
+                {
+                    if (item is NodeViewModel nm)
+                    {
+                        // Id is node id
+                        writer.WriteLine("{ \"node\": { \"id\": \"" + Jsonify(nm.Id) + "\"}}");
+                    }
+                    else if (item is LinkViewModel lm)
+                    {
+                        // SourceId, TargetId
+                        writer.WriteLine("{ \"link\": { \"source\": \"" + Jsonify(lm.SourceId) + "\", \"target\": \"" + Jsonify(lm.TargetId) + "\"}}");
+                    }
+                }
+                writer.WriteLine("]}");
+            }
+        }
+
+        string Jsonify(string id)
+        {
+            return id;
+        }
 
     }
 }

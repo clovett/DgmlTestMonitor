@@ -28,6 +28,8 @@ namespace DgmlTestMonitor
 
         }
 
+        public event EventHandler HideVideo;
+
         private void OnPlay(object sender, ExecutedRoutedEventArgs e)
         {
             e.Handled = true;
@@ -96,6 +98,12 @@ namespace DgmlTestMonitor
         public static readonly DependencyProperty LinkTipProperty =
             DependencyProperty.Register("LinkTip", typeof(string), typeof(VideoLauncher), new PropertyMetadata(null));
 
-
+        private void OnHideVideo(object sender, RoutedEventArgs e)
+        {
+            if (HideVideo != null)
+            {
+                HideVideo(this, EventArgs.Empty);
+            }
+        }
     }
 }

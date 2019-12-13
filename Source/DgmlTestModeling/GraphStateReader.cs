@@ -41,6 +41,8 @@ namespace LovettSoftware.DgmlTestModeling
                                                            typeof(ConnectedMessage),
                                                            typeof(ClearTextMessage),
                                                            typeof(LoadGraphMessage),
+                                                           typeof(CreateNodeMessage),
+                                                           typeof(CreateLinkMessage),
                                                            typeof(NavigateNodeMessage),
                                                            typeof(NavigateLinkMessage));
                 this.server = SmartSocketServer.StartServer("DgmlTestMonitor", resolver, "127.0.0.1:0");
