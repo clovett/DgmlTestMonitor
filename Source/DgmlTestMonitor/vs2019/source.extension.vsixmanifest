@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="780fa4e2-cf3d-4c95-b0fd-85f179cd29ed" Version="3.7" Language="en-US" Publisher="Chris Lovett" />
+        <Identity Id="780fa4e2-cf3d-4c95-b0fd-85f179cd29ed" Version="3.8" Language="en-US" Publisher="Chris Lovett" />
         <DisplayName>DgmlTestMonitor 2019</DisplayName>
         <Description xml:space="preserve">This package watches the DgmlTestModel execution and animates the current state of the test in the associated DGML test diagram in Visual Studio 2019</Description>
         <MoreInfo>https://lovettchris.github.io/posts/model-based-ui-testing-using-dgml/</MoreInfo>
