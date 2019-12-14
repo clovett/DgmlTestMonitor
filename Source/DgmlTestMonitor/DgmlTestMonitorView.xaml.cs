@@ -281,11 +281,7 @@ namespace DgmlTestMonitor
                 for (; i < batch.Count; i++)
                 {
                     Message msg = batch[i];
-                    if (msg is NavigateLinkMessage)
-                    {
-                        OnGraphLinkNavigated((NavigateLinkMessage)msg);
-                    }
-                    else if (msg is CreateNodeMessage)
+                    if (msg is CreateNodeMessage)
                     {
                         OnGraphNodeCreated((CreateNodeMessage)msg);
                     }
@@ -297,9 +293,9 @@ namespace DgmlTestMonitor
                     {
                         OnGraphNodeNavigated((NavigateNodeMessage)msg);
                     }
-                    else if (msg is NavigateNodeMessage)
+                    if (msg is NavigateLinkMessage)
                     {
-                        OnGraphNodeNavigated((NavigateNodeMessage)msg);
+                        OnGraphLinkNavigated((NavigateLinkMessage)msg);
                     }
                     else if (msg is LoadGraphMessage)
                     {
@@ -364,6 +360,10 @@ namespace DgmlTestMonitor
                 string label = msg.NodeLabel;
                 GraphCategory c = GetOrCreateCategory(msg.Category);
                 GraphNode node = graph.Nodes.GetOrCreate(id, label, c);
+                if (msg.IsGroup)
+                {
+                    node.SetGroupStyle(GraphGroupStyle.Expanded);
+                }
                 if (!string.IsNullOrEmpty(msg.ParentGroupId))
                 {
                     GraphNode parent = graph.Nodes.Get(msg.ParentGroupId);

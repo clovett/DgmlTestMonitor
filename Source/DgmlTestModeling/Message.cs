@@ -227,6 +227,9 @@ namespace LovettSoftware.DgmlTestModeling
         {
             this.nodeId = nodeId;
             this.nodeLabel = nodeLabel;
+            this.category = category;
+            this.isGroup = isGroup;
+            this.parentGroupId = parentGroupId;
         }
 
         /// <summary>

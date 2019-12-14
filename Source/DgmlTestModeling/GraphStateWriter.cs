@@ -60,37 +60,46 @@ namespace LovettSoftware.DgmlTestModeling
             await pipe.SendReceiveAsync(new LoadGraphMessage(path));
         }
 
+        private void GetParentChain(GraphNode node, List<GraphNode> parents)
+        {
+            foreach (GraphNode parent in node.GetSources(GraphCommonSchema.Contains))
+            {
+                parents.Insert(0, parent);
+                GetParentChain(parent, parents);
+                break;
+            }
+        }
+
+        private async Task CreateParentChain(GraphNode node)
+        {
+            if (!createdNodes.Contains(node.Id))
+            {
+                List<GraphNode> chain = new List<GraphNode>();
+                GetParentChain(node, chain);
+                chain.Add(node);
+
+                // Now recreate this parent chain in top down order.
+                GraphNode p = null;
+                foreach (GraphNode g in chain)
+                {
+                    if (!createdNodes.Contains(g.Id))
+                    {
+                        createdNodes.Add(g.Id);                        
+                        GraphCategory c = g.Categories.FirstOrDefault();
+                        await pipe.SendReceiveAsync(new CreateNodeMessage(g.Id.ToString(), g.Label, c?.Id, g.IsGroup, p?.Id.ToString()));
+                    }
+                    p = g;
+                }
+            }
+        }
+
         /// <summary>
         /// Instruct client to navigate to the given node
         /// </summary>
         /// <param name="node">A GraphNode object belonging to the graph loaded in LoadGraph</param>
         public async Task NavigateToNode(GraphNode node)
         {
-            List<GraphNode> parentChain = new List<GraphNode>();
-            parentChain.Add(node);
-
-            if (node.HasParentGroups)
-            {
-                GraphGroup g = node.ParentGroups.FirstOrDefault();
-                while (g != null)
-                {
-                    parentChain.Insert(0, g.GroupNode);
-                    g = g.Parents.FirstOrDefault();
-                }
-            }
-            
-            // Now recreate this parent chain in top down order.
-            foreach (GraphNode g in parentChain)
-            { 
-                if (!createdNodes.Contains(g.Id))
-                {
-                    createdNodes.Add(g.Id);
-                    GraphGroup p = g.ParentGroups.FirstOrDefault();
-                    GraphCategory c = g.Categories.FirstOrDefault();
-                    await pipe.SendReceiveAsync(new CreateNodeMessage(g.Id.ToString(), g.Label, c?.Id, true, p?.Id.ToString()));
-                }
-            }
-
+            await CreateParentChain(node);
             await pipe.SendReceiveAsync(new NavigateNodeMessage(node.Id.ToString()));
         }
 
@@ -100,6 +109,8 @@ namespace LovettSoftware.DgmlTestModeling
         /// <param name="link">A GraphLink object belonging to the graph loaded in LoadGraph</param>
         public async Task NavigateLink(GraphLink link)
         {
+            await CreateParentChain(link.Source);
+            await CreateParentChain(link.Target);
             string id = link.Source.Id.ToString() + "->" + link.Target.Id.ToString();            
             if (!createdLinks.Contains(id))
             {
