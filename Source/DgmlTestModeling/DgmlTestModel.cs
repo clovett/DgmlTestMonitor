@@ -100,13 +100,14 @@ namespace LovettSoftware.DgmlTestModeling
         /// <param name="target">The target object that implements the node state methods and link predicates</param>
         /// <param name="log">The log to write to</param>
         /// <param name="r">The random number generator to use</param>
-        public DgmlTestModel(object target, TextWriter log, Random r)
+        /// <param name="connectTimeout">Time to wait for VS DgmlTestMonitor connection in milliseconds</param>
+        public DgmlTestModel(object target, TextWriter log, Random r, int connectTimeout)
         {
             this.random = r;
             this.target = target;
             this.log = log;
             writer = new GraphStateWriter(log);
-            writer.Connect().Wait();
+            writer.Connect().Wait(connectTimeout);
         }
 
         /// <summary>

@@ -1,0 +1,1 @@
+nuget pack DgmlTestModeling.vs2019.csproj

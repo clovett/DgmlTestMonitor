@@ -71,7 +71,6 @@
     <Content Include="docit\Microsoft.VisualStudio.DgmlTestModeling.xml" />
     <Content Include="docit\System.Compiler.dll" />
     <Content Include="Package\Dgml.png" />
-    <Content Include="Package\lib\net472\Microsoft.VisualStudio.DgmlTestModeling.dll" />
     <Content Include="Readme.htm" />
   </ItemGroup>
   <ItemGroup>
@@ -92,14 +91,4 @@
   <Target Name="BeforeBuild">
   </Target>
   -->
-  <Target Name="AfterBuild">
-    <PropertyGroup>
-      <DocFile>$(ProjectDir)\@(DocFileItem)</DocFile>
-    </PropertyGroup>
-    <Message Importance="high" Text="IlToXml on $(DocFile)" />
-    <Exec Command="&quot;$(ProjectDir)\docit\iltoxml.exe&quot; -o &quot;Microsoft.VisualStudio.DgmlTestModeling.xml&quot; -n Microsoft.VisualStudio.DgmlTestModeling -d &quot;$(DocFile)&quot; &quot;$(TargetPath)&quot;" Condition="'@(DocFileItem)' != ''" Outputs="$(ProjectDir)\docit\Microsoft.VisualStudio.DgmlTestModeling.xml" WorkingDirectory="$(ProjectDir)\docit\" StandardErrorImportance="High">
-    </Exec>
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ProjectDir)\Package\lib\net472" />
-    <Exec Command="$(MSBuildThisFileDirectory)\..\Tools\NuGet.exe pack Microsoft.VisualStudio.DgmlTestModeling.2019.dll.nuspec" WorkingDirectory="$(ProjectDir)\Package" />
-  </Target>
 </Project>

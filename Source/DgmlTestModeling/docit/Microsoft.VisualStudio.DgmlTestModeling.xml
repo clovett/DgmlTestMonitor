@@ -216,6 +216,7 @@
           <arg var="target" name="object" namespace="System" />
           <arg var="log" name="TextWriter" namespace="System.IO" />
           <arg var="r" name="Random" namespace="System" />
+          <arg var="connectTimeout" name="Int32" namespace="System" />
         </params>
       </method>
       <method name="Load" public="true">

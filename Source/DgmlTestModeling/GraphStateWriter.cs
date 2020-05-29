@@ -57,6 +57,11 @@ namespace LovettSoftware.DgmlTestModeling
         /// <param name="path">Full path to .dgml file</param>
         public async Task LoadGraph(string path)
         {
+            if (this.pipe == null || !this.pipe.IsConnected)
+            {
+                return;
+            }
+
             await pipe.SendReceiveAsync(new LoadGraphMessage(path));
         }
 
@@ -99,6 +104,11 @@ namespace LovettSoftware.DgmlTestModeling
         /// <param name="node">A GraphNode object belonging to the graph loaded in LoadGraph</param>
         public async Task NavigateToNode(GraphNode node)
         {
+            if (this.pipe == null || !this.pipe.IsConnected)
+            {
+                return;
+            }
+
             await CreateParentChain(node);
             await pipe.SendReceiveAsync(new NavigateNodeMessage(node.Id.ToString()));
         }
@@ -109,6 +119,11 @@ namespace LovettSoftware.DgmlTestModeling
         /// <param name="link">A GraphLink object belonging to the graph loaded in LoadGraph</param>
         public async Task NavigateLink(GraphLink link)
         {
+            if (this.pipe == null || !this.pipe.IsConnected)
+            {
+                return;
+            }
+
             await CreateParentChain(link.Source);
             await CreateParentChain(link.Target);
             string id = link.Source.Id.ToString() + "->" + link.Target.Id.ToString();            
@@ -129,6 +144,11 @@ namespace LovettSoftware.DgmlTestModeling
         /// <param name="args">The arguments</param>
         public async Task WriteMessage(string format, params object[] args)
         {
+            if (this.pipe == null || !this.pipe.IsConnected)
+            {
+                return;
+            }
+
             string msg = string.Format(format, args);
             await pipe.SendReceiveAsync(new ClearTextMessage(msg));
         }
