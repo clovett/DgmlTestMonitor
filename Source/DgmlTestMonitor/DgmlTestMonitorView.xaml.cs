@@ -359,7 +359,11 @@ namespace DgmlTestMonitor
                 string id = msg.NodeId;
                 string label = msg.NodeLabel;
                 GraphCategory c = GetOrCreateCategory(msg.Category);
-                GraphNode node = graph.Nodes.GetOrCreate(id, label, c);
+                GraphNode node = graph.Nodes.Get(id);
+                if (node == null)
+                {
+                    node = graph.Nodes.GetOrCreate(id, label, c);
+                }
                 if (msg.IsGroup)
                 {
                     node.SetGroupStyle(GraphGroupStyle.Expanded);
@@ -407,9 +411,10 @@ namespace DgmlTestMonitor
         private void OnGraphLoaded(LoadGraphMessage msg)
         {
             logItems.Clear();
+            reader.Pause(); // wait for graph layout to complete!
             LoadGraph(msg.Path);
         }
-        
+
         private void OnGraphNodeNavigated(NavigateNodeMessage msg)
         {
             if (!string.IsNullOrEmpty(msg.NodeId))
@@ -676,6 +681,10 @@ namespace DgmlTestMonitor
         private void OnGraphLayoutUpdated(object sender, EventArgs e)
         {
             layoutReady = true;
+            if (reader.IsPaused)
+            {
+                reader.Resume();
+            }
         }
 
         private void OnTogglePause(object sender, RoutedEventArgs e)

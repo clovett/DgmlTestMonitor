@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>LovettSoftware.DgmlTestModeling.2022.dll</id>
+    <version>3.9.1</version>
+    <authors>Chris Lovett</authors>
+    <owners>Chris Lovett</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/clovett/DgmlTestMonitor</projectUrl>
+    <repository type="git" url="https://github.com/clovett/DgmlTestMonitor"/>
+    <icon>images\Dgml.png</icon>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This library contains the DgmlTestModel class which you can use to execute a DGML test model. The execution state is writen to a named pipe so that the DGML Test Monitor VSIX package can animate the progress during test execution. </description>
+    <releaseNotes>Fixed some bugs, and improved performance.</releaseNotes>
+    <copyright>Copyright © 2022 Lovett Software</copyright>
+    <tags>DGML Test Modeling</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.7"/>
+      <group targetFramework=".NETFramework4.7.2"/>
+      <group targetFramework=".NETFramework4.8"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\bin\Debug\*.dll" target="lib\net47"/>
+    <file src="..\bin\Debug\*.dll" target="lib\net472"/>
+    <file src="..\bin\Debug\*.dll" target="lib\net48"/>
+    <file src="Dgml.png" target="images" />
+  </files>
+</package>

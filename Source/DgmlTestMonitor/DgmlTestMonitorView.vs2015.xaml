@@ -37,8 +37,8 @@
     </UserControl.Resources>
     <DockPanel>
 
-        <local:VideoLauncher LinkText="Video: DGML Test Modeling" DockPanel.Dock="Top" MinHeight="22" x:Name="VideoLink"
-                             VideoUrl="http://www.lovettsoftware.com/videos/DgmlTestModel.mp4"
+        <local:VideoLauncher LinkText="Video: DGML Test Modeling" DockPanel.Dock="Top" MinHeight="22" x:Name="VideoLink" Visibility="Collapsed"
+                             VideoUrl="http://lovettsoftware.com/#posts/model-based-ui-testing-using-dgml/"
                              VideoDescription="This seven minute video shows how to use the DGML Test Monitor which is designed to be used in combination with a DGML Test Model."/>
 
         <Border Padding="2" Background="{DynamicResource {x:Static platformUI:EnvironmentColors.CommandBarGradientBeginBrushKey}}"  DockPanel.Dock="Top" >
