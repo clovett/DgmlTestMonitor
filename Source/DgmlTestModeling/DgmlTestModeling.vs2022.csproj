@@ -1,70 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2FEE24BA-85FD-4863-8F3A-41AE0A6DC8CE}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LovettSoftware.DgmlTestModeling</RootNamespace>
+    <Description>The Dgml Test Modeling library.</Description>
     <AssemblyName>LovettSoftware.DgmlTestModeling</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <TargetPlatformVersion>8.1</TargetPlatformVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;VS2015</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Debug\LovettSoftware.DgmlTestModeling.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Release\LovettSoftware.DgmlTestModeling.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>$(MyKeyFile)</AssemblyOriginatorKeyFile>
+    <RootNamespace>LovettSoftware.DgmlTestModeling</RootNamespace>
+    <TargetFramework>net7.0-windows</TargetFramework>
+
+    <Title>LovettSoftware.DgmlTestModeling</Title>
+    <Description>A library for execiting DGML test models</Description>
+    <Company>LovettSoftware</Company>
+    <Product>LovettSoftware.DgmlTestModeling</Product>
+    <Copyright>Copyright © 2023</Copyright>
+    <PackageProjectUrl>https://github.com/clovett/DgmlTestMonitor</PackageProjectUrl>
+    <PackageIcon>Dgml.png</PackageIcon>
+    <RepositoryUrl>https://github.com/clovett/DgmlTestMonitor</RepositoryUrl>
+    <AssemblyVersion>3.9.2</AssemblyVersion>
+    <FileVersion>3.9.2</FileVersion>
+    <Version>3.9.2</Version>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.GraphModel, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Runtime" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Windows" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DgmlTestModel.cs" />
-    <Compile Include="GraphStateReader.cs" />
-    <Compile Include="GraphStateWriter.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SmartSocketClient.cs" />
-    <Compile Include="SmartSocketServer.cs" />
-    <Compile Include="SmartSocketTypeResolver.cs" />
-    <Compile Include="SocketMessage.cs" />
+    <None Remove="DgmlTestModeling.csproj.vspscc" />
+    <None Remove="DgmlTestModeling.vs2015.csproj.vspscc" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="docit\doc.xslt" />
@@ -81,14 +36,16 @@
   <ItemGroup>
     <None Include="Package\Microsoft.VisualStudio.DgmlTestModeling.2022.dll.nuspec" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\GraphViewer\GraphModel\GraphModel.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Package\Dgml.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images\" />
+  </ItemGroup>
 </Project>

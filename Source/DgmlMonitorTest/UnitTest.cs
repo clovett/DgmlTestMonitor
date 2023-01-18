@@ -1,24 +1,15 @@
 using LovettSoftware.DgmlTestModeling;
 using Microsoft.VisualStudio.GraphModel;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace DgmlMonitorTest
 {
-    class Program
+    class UnitTest
     {
-        static void Main(string[] args)
+        [Test]
+        public async Task Run()
         {
-            Program p = new Program();
-            p.Run().Wait();
-        }
-
-        async Task Run()
-        { 
+            // Connect with the DgmlTestMonitor tool window running inside a VS 2022 instance.
             GraphStateWriter writer = new GraphStateWriter(Console.Out);
             await writer.Connect();
 

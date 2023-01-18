@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29123.89
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DgmlTestModeling.vs2022", "DgmlTestModeling\DgmlTestModeling.vs2022.csproj", "{2FEE24BA-85FD-4863-8F3A-41AE0A6DC8CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DgmlTestModeling.vs2022", "DgmlTestModeling\DgmlTestModeling.vs2022.csproj", "{2FEE24BA-85FD-4863-8F3A-41AE0A6DC8CE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DgmlMonitorTest", "DgmlMonitorTest\DgmlMonitorTest.csproj", "{BF29FB9E-0D93-42EC-A089-F7DA3F230964}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphModel", "..\..\GraphViewer\GraphModel\GraphModel.csproj", "{968E0DF5-C124-4471-94A6-2D9F8F4422E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{BF29FB9E-0D93-42EC-A089-F7DA3F230964}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF29FB9E-0D93-42EC-A089-F7DA3F230964}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF29FB9E-0D93-42EC-A089-F7DA3F230964}.Release|Any CPU.Build.0 = Release|Any CPU
+		{968E0DF5-C124-4471-94A6-2D9F8F4422E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{968E0DF5-C124-4471-94A6-2D9F8F4422E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{968E0DF5-C124-4471-94A6-2D9F8F4422E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{968E0DF5-C124-4471-94A6-2D9F8F4422E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
